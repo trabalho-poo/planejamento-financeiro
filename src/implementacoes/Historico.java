@@ -1,4 +1,4 @@
-package implementações;
+package implementacoes;
 
 public class Historico {
 	
