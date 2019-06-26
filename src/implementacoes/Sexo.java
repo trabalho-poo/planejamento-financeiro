@@ -1,4 +1,4 @@
-package implementações;
+package implementacoes;
 
 public enum Sexo {
 	MASCULINO, FEMININO;
