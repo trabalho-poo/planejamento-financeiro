@@ -13,32 +13,32 @@ public class BancoDeDados {
 	public static final String TIMEZONE 	= "useTimezone=true&serverTimezone=UTC";
 	public static final String USER 		= "root";
 	public static final String PASSWORD 	= "skxkffldk";
-	
+
 	private Connection connection;
 	private Statement statement;
 	private ResultSet resultSet;
-	
+
 	public BancoDeDados() {
 		this.connection = null;
 		this.statement = null;
 		this.resultSet = null;
 	}
-	
+
 	public void conectar() throws Exception {
-		// monta a url do banco (exemplo: jdbc:mysql://localhost:3306/compras?useTimezone=true&serverTimezone=UTC) 
+		// monta a url do banco (exemplo: jdbc:mysql://localhost:3306/compras?useTimezone=true&serverTimezone=UTC)
 		String url = BancoDeDados.PREFIX + "//" + BancoDeDados.HOSTNAME + ":" + BancoDeDados.PORT + "/" + BancoDeDados.DATABASE + "?" + BancoDeDados.TIMEZONE;
-		// estabele uma conex�o com o banco de dados em 'url' 
+		// estabele uma conex�o com o banco de dados em 'url'
 		this.connection = DriverManager.getConnection(url,  BancoDeDados.USER, BancoDeDados.PASSWORD);
 		this.statement = this.connection.createStatement();
 	}
-	
+
 	public boolean isConectado() throws Exception{
 		if(this.connection != null)
 			return true;
 		else
 			return false;
 	}
-	
+
 	public void listarUsuarios() {
 		try {
 			String query = "SELECT * FROM usuario ORDER BY nome";
@@ -56,7 +56,41 @@ public class BancoDeDados {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
-	
+
+	public static void inserirContato(Usuario _usuario){
+		try{
+			Stringbuilder query = new StringBuilder();
+			query.append("INSERT INTO usuario (nome,email,senha,rg,cpf,sexo,dataNascimento_idData) VALUES (");
+			query.append("'");
+			query.append(_usuario.nome);
+			query.append("','");
+			query.append(_usuario.email);
+			query.append("','");
+			query.append(_usuario.senha);
+			query.append("','");
+			query.append(_usuario.rg);
+			query.append("','");
+			query.append(_usuario.cpf);
+			query.append("','");
+			query.append(_usuario.sexo);
+			query.append("','");
+			query.append(idData(_usuario.dataNascimento));
+			query.append("');");
+
+			this.statement.executeUpdate(query.toString());
+		}catch (Exception e){
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+
+	public static void inserirData(Data _data){
+
+	}
+
+	public static int idData(Data _data){
+
+	}
+
 	public void listarMovimentacoes() {
 		try {
 			String query = "SELECT * FROM movimentacao ORDER BY data";
@@ -74,6 +108,6 @@ public class BancoDeDados {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
-	
-	
+
+
 }
