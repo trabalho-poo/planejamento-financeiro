@@ -1,47 +1,99 @@
 package implementacoes;
 
+/**
+ * Classe para a geracao de Data que sera
+ * utilizada ao longo do programa.
+ * 
+ * @author Grupo (Cleisson diLauro, Franco Flores, Guilherme Mattos, Luciano
+ *         Alves, Natalia Lopes)
+ * @version 1.0 (junho-2019)
+ */
 public class Data {
-	private int dia, mes, ano;
+	/** dia como um inteiro */
+	private int dia;
+	/** mes como um inteiro */
+	private int mes;
+	/** ano como um inteiro */
+	private int ano;
 
-	// Construtor com data vazia.
+	/**
+	 * Construtor com data vazia.
+	 * Atribui o data default 01/01/1900.
+	 */
 	public Data() {
-		this.dia = 1;
-		this.mes = 1;
-		this.ano = 1900;
+		this.setDia(1);
+		this.setMes(1);
+		this.setAno(1900);
 	}
 
-	// Construtor somente com o mes e ano.
+	/**
+	 * Construtor somente com o mes e ano.
+	 * Atribui o dia default 1.
+	 * 
+	 * @param _mes mes da data como um inteiro
+	 * @param _ano ano da data como um inteiro
+	 */
 	public Data(int _mes, int _ano) throws Exception {
 		this.setData(1, _mes, _ano);
 	}
 
-	// Construtor com Data completa.
+	/**
+	 * Construtor com Data completa.
+	 * @param _dia dia da data como um inteiro
+	 * @param _mes mes da data como um inteiro
+	 * @param _ano ano da data como um inteiro
+	 */
 	public Data(int _dia, int _mes, int _ano) throws Exception {
 		this.setData(_dia, _mes, _ano);
 	}
 
-	// Construtor com mes em string
+	/**
+	 * Construtor com mes em string,
+	 * dia e ano em Inteiro.
+	 * 
+	 * @param _dia dia da data como um inteiro
+	 * @param _mes mes da data como uma String
+	 * @param _ano ano da data como um inteiro
+	 */
 	public Data(int _dia, String _mes, int _ano) throws Exception {
 		this.setData(_dia, this.setMes(_mes), _ano);
-
 	}
 
-	// Construtor com Data completa em string
+	/**
+	 * Construtor com Data completa passada em string
+	 * 
+	 * @param data data completa passada como String
+	 */
 	public Data(String data) throws Exception {
 		setDataString(data);
 	}
 
+	/**
+	 * Pega todos os valores para a data a data
+	 * 
+	 * @param _dia dia da data como um inteiro.
+	 * @param _mes mes da data como um inteiro.
+	 * @param _ano ano da data como um inteiro.
+	 * @throws Exception Caso a data nao esteja em formato valido.
+	 */
 	public void setData(int _dia, int _mes, int _ano) throws Exception {
 		if (!Data.isDataValida(_dia, _mes, _ano)) {
 			throw new Exception("Data invalida");
 		} else {
-			this.dia = _dia;
-			this.mes = _mes;
-			this.ano = _ano;
+			this.setDia(_dia);
+			this.setMes(_mes);
+			this.setAno(_ano);
 		}
 
 	}
 
+	/**
+	 * Pega a data em String para atribuir aos campos
+	 * dia, mes e ano.
+	 * 
+	 * @param data data como uma String.
+	 * @throws Exception Caso a data nao esteja em formato valido.
+	 */
 	public void setDataString(String data) throws Exception {
 		// Confere se a string possui o tamanho correto para ser do tipo d/m/aaaa ou
 		// dd/mm/aaaa
@@ -82,6 +134,12 @@ public class Data {
 		}
 	}
 
+	/**
+	 * Pega a String _mes e atribui o inteiro correspondente
+	 * ao campo mes da Data.
+	 * 
+	 * @param _mes mes da data como uma String.
+	 */
 	public int setMes(String _mes) {
 		_mes = _mes.toLowerCase();
 
@@ -113,35 +171,64 @@ public class Data {
 			return 0;
 	}
 
-	public Data getData() {
-		System.out.println(this.dia + "/" + this.mes + "/" + this.ano);
-		return this;
-	}
+//	public Data getData() {
+//		System.out.println(this.dia + "/" + this.mes + "/" + this.ano);
+//		return this;
+//	}
 
+	/**
+	 * Metodo para retornar o dia do objeto.
+	 * @return dia dia do objeto como um inteiro.
+	 */
 	public int getDia() {
 		return this.dia;
 	}
 
+	/**
+	 * Metodo para atribuir o dia para Data.
+	 * @param _dia da Data como um inteiro.
+	 */
 	public void setDia(int _dia) {
 		this.dia = _dia;
 	}
 
+	/**
+	 * Metodo para retornar o mes do objeto.
+	 * @return mes da data como um inteiro.
+	 */
 	public int getMes() {
 		return this.mes;
 	}
 
+	/**
+	 * Metodo para pegar o mes da data.
+	 * @param _mes mes da data como um inteiro.
+	 */
 	public void setMes(int _mes) {
 		this.mes = _mes;
 	}
 
+	/**
+	 * Metodo para retornar o dia do objeto.
+	 * @return dia
+	 */
 	public int getAno() {
 		return this.ano;
 	}
 
+	/**
+	 * Metodo para pegar o ano da data.
+	 * @param _ano ano da data como um inteiro.
+	 */
 	public void setAno(int _ano) {
 		this.ano = _ano;
 	}
 
+	/**
+	 * Método sobreposto para devolver os campos formatados em uma String
+	 * 
+	 * @return retorna String com todos os valores dos campos
+	 */
 	public String toString() {
 		StringBuilder dados = new StringBuilder();
 		dados.append(this.getDia());
@@ -152,6 +239,11 @@ public class Data {
 		return dados.toString();
 	}
 
+	/**
+	 * Metodo para verificar se o ano passado como parametro e Bissextp
+	 * @param _ano
+	 * @return true se for bisexto, caso contrario, false.
+	 */
 	public static boolean isBissexto(int _ano) {
 		if (_ano > 1582) {
 			if (((_ano % 4) == 0) && ((_ano % 100) != 0)) {
@@ -164,6 +256,15 @@ public class Data {
 		}
 	}
 
+	/**
+	 * /**
+	 * Metodo para verificar se o data passada como parametro esta
+	 * em um intervalo valido.
+	 * @param _dia
+	 * @param _mes
+	 * @param _ano
+	 * @return true se a Data foi valida, caso contrario, false.
+	 */
 	public static boolean isDataValida(int _dia, int _mes, int _ano) {
 		if (_ano >= 1900) {
 			if ((_mes <= 12) && (_dia <= 31) && (_dia > 0) && (_mes > 0)) {
@@ -189,80 +290,41 @@ public class Data {
 
 	}
 
-	// public void incrementa(int _dia, int _mes, int _ano) {
-	// if ((_mes <= 12) && (_dia <= 31) && (_dia > 0) && (_mes > 0) && (_ano >=
-	// 1900))
-	// {
-	// if (_mes == 2)
-	// {
-	// if ((Data.isBissexto(_ano)) && (_dia <= 29))
-	// {
-	// this.dia = this.dia + 1;
-	// if (this.dia > 29) {
-	// this.dia = 1;
-	// this.mes = this.mes + 1;
-	// }
-	// if (this.mes > 12) {
-	// this.mes = 1;
-	// this.ano = this.ano + 1;
-	// }
-	// }
-	// else if (_dia <= 28)
-	// {
-	// this.dia = this.dia + 1;
-	// if (this.dia > 28) {
-	// this.dia = 1;
-	// this.mes = this.mes + 1;
-	// }
-	// if (this.mes > 12) {
-	// this.mes = 1;
-	// this.ano = this.ano + 1;
-	// }
-	// }
-	// }
-	// else if ((_mes == 4) || (_mes == 6) || (_mes == 9) || (_mes == 11))
-	// {
-	// this.dia = this.dia + 1;
-	// if (this.dia > 30) {
-	// this.dia = 1;
-	// this.mes = this.mes + 1;
-	// }
-	// if (this.mes > 12) {
-	// this.mes = 1;
-	// this.ano = this.ano + 1;
-	// }
-	// }
-	// else
-	// {
-	// this.dia = this.dia + 1;
-	// if (this.dia > 31) {
-	// this.dia = 1;
-	// this.mes = this.mes + 1;
-	// }
-	// if (this.mes > 12) {
-	// this.mes = 1;
-	// this.ano = this.ano + 1;
-	// }
-	// }
-	// }
-	// }
-
+	/**
+	 * Método que incrementa um dia no objeto de chamada.
+	 */
 	public void incrementa() {
-		try {
+		try 
+		{
 			this.setData(getDia() + 1, getMes(), getAno());
-		} catch (Exception dia) {
-			try {
+		} 
+		catch (Exception dia) 
+		{
+			try 
+			{
 				this.setData(1, getMes() + 1, getAno());
-			} catch (Exception mes) {
-				try {
+			} 
+			catch (Exception mes) 
+			{
+				try 
+				{
 					this.setData(1, 1, getAno() + 1);
-				} catch (Exception ano) {
+				} 
+				catch (Exception ano) 
+				{
+					new Exception("Ocorreu um erro ao incrementar essa Data!");
 				}
 			}
 		}
-		return;
 	}
 
+	/**
+	 * Método que chama o metodo sobrecarregado incrementa
+	 * com a quantidade de iterações passada como parametro.
+	 * 
+	 * @param dias quantidade de dias a ser incrementado.
+	 * @return objeto de chamada com dias incrementados.
+	 */
 	public Data incrementa(int dias) {
 		int i = 0;
 
@@ -273,54 +335,54 @@ public class Data {
 		return this;
 	}
 
+	/**
+	 * Método que chama o algoritimo de comparacao de Data.
+	 * 
+	 * @return inteiro retornado no metodo sobrecarregado compareTo 
+	 */
 	public int compareTo(Data _data) {
-		// -1 this < _data => _data Ã© mais antiga
-		// 0 this == _data =>
-		// 1 this > _data => this Ã© mais antiga
-		// if (this.getAno() > _data.getAno()) {
-		// return -1;
-		// } else if (this.getAno() < _data.getAno()) {
-		// return 1;
-		// } else {
-		// if (this.getMes() > _data.getMes()) {
-		// return -1;
-		// } else if (this.getMes() < _data.getMes()) {
-		// return 1;
-		// } else {
-		// if (this.getDia() > _data.getDia()) {
-		// return -1;
-		// } else if (this.getDia() < _data.getDia()) {
-		// return 1;
-		// } else
-		// return 0;
-		// }
-		// }
 		return Data.compareTo(this.getDia(), this.getMes(), this.getAno(), _data.getDia(), _data.getMes(),
 				_data.getAno());
 	}
 
+	/**
+	 * Método sobrecarregado que fornece um algoritmo para comparar elementos na busca.
+	 * 
+	 * @return inteiro, 1 se maior, -1 se menor ou 0 se igual
+	 */
 	public static int compareTo(int _dia1, int _mes1, int _ano1, int _dia2, int _mes2, int _ano2) {
-		// -1 this < _data => _data Ã© mais antiga
-		// 0 this == _data =>
-		// 1 this > _data => this Ã© mais antiga
-		if (_ano1 > _ano2) {
+		if (_ano1 > _ano2) 
+		{
 			return -1;
-		} else if (_ano1 < _ano2) {
+		} 
+		else if (_ano1 < _ano2) 
+		{
 			return 1;
-		} else {
-			if (_mes1 > _mes2) {
+		} 
+		else 
+		{
+			if (_mes1 > _mes2) 
+			{
 				return -1;
-			} else if (_mes1 < _mes2) {
+			} 
+			else if (_mes1 < _mes2) 
+			{
 				return 1;
-			} else {
-				if (_dia1 > _dia2) {
+			} 
+			else 
+			{
+				if (_dia1 > _dia2) 
+				{
 					return -1;
-				} else if (_dia1 < _dia2) {
+				} 
+				else if (_dia1 < _dia2) 
+				{
 					return 1;
-				} else
+				} 
+				else {
 					return 0;
+				}
 			}
 		}
 	}
-
 }

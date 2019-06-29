@@ -1,18 +1,17 @@
 package implementacoes;
 
 /**
- * Oferece métodos de cadastro e edicao de informacoes de usuarios, assim como
+ * Oferece metodos de cadastro e edicao de informacoes de usuarios, assim como
  * possui um metodo para calculo do valor do saldo atual.
  * <p>
- * blabla
  *
  * @author Grupo (Cleisson diLauro, Franco Flores, Guilherme Mattos, Luciano
- *         Alves, Natália Lopes)
+ *         Alves, Natalia Lopes)
  * @version 1.0 (junho-2019)
  *
  */
-
 public class Usuario {
+	/** Campos de variaveis */
 	private String nome;
 	private Sexo sexo;
 	private Data dataNascimento;
@@ -67,38 +66,39 @@ public class Usuario {
 	}
 
 	/**
-	 * @return the rg
+	 * @return O RG do usuario
 	 */
 	public String getRg() {
 		return this.rg;
 	}
 
 	/**
-	 * @return the cpf
+	 * @return O CPF do usuario
 	 */
 	public String getCpf() {
 		return this.cpf;
 	}
 
 	/**
-	 * Seta o nome do Usuario
+	 * Setar o nome do Usuario
 	 * 
-	 * @param _nome
+	 * @param _nome do usuario
 	 */
 	public void setNome(String _nome) {
 		this.nome = _nome;
 	}
 
 	/**
-	 * Seta o sexo do Usuario
+	 * Setar o sexo do Usuario
 	 * 
-	 * @param _sexo
+	 * @param _sexo do usuario
 	 */
 	public void setSexo(Sexo _sexo) {
 		this.sexo = _sexo;
 	}
 
 	/**
+	 * Setar a data de Nascimento do Usuario
 	 * @param _dataNascimento
 	 */
 	public void setDataNascimento(Data _dataNascimento) {
@@ -106,71 +106,80 @@ public class Usuario {
 	}
 
 	/**
-	 * @param rg
+	 * Setar o RG do usuario
+	 * @param _rg do usuario
 	 */
 	public void setRg(String _rg) {
 		this.rg = _rg;
 	}
 
-	/**
-	 * @return the email
+	/** 
+	 * Metodo para retornar o email do usuario.
+	 * @return O email do usuario.
 	 */
 	public String getEmail() {
 		return this.email;
 	}
 
 	/**
-	 * @return the senha
+	 * Metodo para retornar a Senha do usuario
+	 * @return A senha do usuario.
 	 */
 	public String getSenha() {
 		return this.senha;
 	}
 
 	/**
-	 * @param cpf
-	 *            the cpf to set
+	 * Setar o CPF do usuario
+	 * @param _cpf do usuario
 	 */
 	public void setCpf(String _cpf) {
 		this.cpf = _cpf;
 	}
 
 	/**
-	 * @param email
-	 *            the email to set
+	 * Setar o Email do Usuario
+	 * @param _email do usuario
 	 */
 	public void setEmail(String _email) {
 		this.email = _email;
 	}
 
 	/**
-	 * @param senha
-	 *            the senha to set
+	 * Setar a senha para login do usuario
+	 * @param _senha do usuario
 	 */
 	public void setSenha(String _senha) {
 		this.senha = _senha;
 	}
 	
-	
 	/**
-	 * Compara os usuários por nome em ordem alfabetica.
+	 * Compara os usuarios por nome em ordem alfabetica.
 	 * 
-	 * @return retorna 1 caso 	 */
+	 * @return retorna 1 caso o Nome do objeto for maior que o do parametro,
+	 * retorna -1 caso seja menor, 0 caso sejam iguais.
+	 */
 	public int compareToNome(Usuario _usuario) {
 		return (this.getNome().compareToIgnoreCase(_usuario.getNome()));
 	}
 
+	/**
+	 * Compara os usuarios por Data de Nascimento em ordem alfabetica.
+	 * 
+	 * @return retorna 1 caso o Data do objeto for maior que a do parametro,
+	 * retorna -1 caso seja menor, 0 caso sejam iguais.
+	 */
 	public int compareToDataNascimento(Usuario _usuario) {
 		return (this.getDataNascimento().compareTo(_usuario.getDataNascimento()));
 	}
 
 	/**
-	 * Sobreposição do método toString para retornar todo o conteúdo do objeto
+	 * Sobreposicaoo do metodo toString para retornar todo o conteudo do objeto
 	 * 
-	 * @return retorna um String com todos os dados cadastrados do usuario (exceto
+	 * @return retorna uma String com todos os dados cadastrados do usuario (exceto
 	 *         senha)
 	 */
 	public String toString() {
-
 		StringBuilder dados = new StringBuilder();
 		dados.append("\nNome: ");
 		dados.append(this.getNome());
@@ -185,6 +194,5 @@ public class Usuario {
 		dados.append("\nEmail: ");
 		dados.append(this.getEmail());
 		return dados.toString();
-
 	}
 }
