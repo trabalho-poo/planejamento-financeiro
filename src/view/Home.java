@@ -3,23 +3,20 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JSplitPane;
+import javax.swing.JScrollPane;
 import java.awt.Color;
-import java.awt.Button;
-import java.awt.SystemColor;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
+import javax.swing.JLayeredPane;
 import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Button;
+import java.awt.Font;
 
 public class Home extends JFrame {
 
@@ -28,7 +25,7 @@ public class Home extends JFrame {
 	private JTextField textField_1;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
-	
+
 	int xx,xy;
 
 	/**
@@ -47,10 +44,10 @@ public class Home extends JFrame {
 			}
 		});
 	}
-	
-	
+
+
 	// going to borrow code from a gist to move frame.
-	
+
 
 	/**
 	 * Create the frame.
@@ -58,120 +55,77 @@ public class Home extends JFrame {
 	public Home() {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 729, 476);
+		setBounds(100, 100, 850, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.DARK_GRAY);
-		panel.setBounds(0, 0, 346, 490);
+		panel.setBackground(Color.WHITE);
+		panel.setBounds(0, 0, 188, 553);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("KeepToo");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel.setForeground(new Color(240, 248, 255));
-		lblNewLabel.setBounds(139, 305, 84, 27);
-		panel.add(lblNewLabel);
-		
-		JLabel lblWeGotYou = new JLabel("....We got you....");
-		lblWeGotYou.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWeGotYou.setForeground(new Color(240, 248, 255));
-		lblWeGotYou.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblWeGotYou.setBounds(111, 343, 141, 27);
-		panel.add(lblWeGotYou);
-		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon(Home.class.getResource("images/IMG_3547.jpg")));
-//		/Users/onatalia86/eclipse-workspace/planejamento-financeiro/src/images/IMG_3547.JPG"
-		lblNewLabel_1.setBounds(0, 0, 346, 454);
-		panel.add(lblNewLabel_1);
-		
-		Button button = new Button("SignUp");
+
+		Button button_3 = new Button("Sair");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button_3.setForeground(Color.WHITE);
+		button_3.setFont(new Font("Dialog", Font.PLAIN, 15));
+		button_3.setBackground(new Color(47, 70, 79));
+		button_3.setBounds(-16, 458, 222, 40);
+		panel.add(button_3);
+
+		Button button_1 = new Button("Hist\u00F3rico");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button_1.setForeground(Color.WHITE);
+		button_1.setFont(new Font("Dialog", Font.PLAIN, 15));
+		button_1.setBackground(new Color(49, 113, 37));
+		button_1.setBounds(-16, 211, 222, 40);
+		panel.add(button_1);
+
+		Button button_2 = new Button("Relatorios");
+		button_2.setForeground(Color.WHITE);
+		button_2.setFont(new Font("Dialog", Font.PLAIN, 15));
+		button_2.setBackground(new Color(79, 79, 79));
+		button_2.setBounds(-16, 318, 222, 40);
+		panel.add(button_2);
+
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		Button button = new Button("Nova Movimenta\u00E7\u00E3o");
 		button.setForeground(Color.WHITE);
-		button.setBackground(new Color(241, 57, 83));
-		button.setBounds(395, 363, 283, 36);
-		contentPane.add(button);
-		
-		textField = new JTextField();
-		textField.setBounds(395, 83, 283, 36);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblUsername = new JLabel("USERNAME");
-		lblUsername.setBounds(395, 58, 114, 14);
-		contentPane.add(lblUsername);
-		
-		JLabel lblEmail = new JLabel("EMAIL");
-		lblEmail.setBounds(395, 132, 54, 14);
-		contentPane.add(lblEmail);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(395, 157, 283, 36);
-		contentPane.add(textField_1);
-		
-		JLabel lblPassword = new JLabel("PASSWORD");
-		lblPassword.setBounds(395, 204, 96, 14);
-		contentPane.add(lblPassword);
-		
-		JLabel lblRepeatPassword = new JLabel("REPEAT PASSWORD");
-		lblRepeatPassword.setBounds(395, 275, 133, 14);
-		contentPane.add(lblRepeatPassword);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(395, 229, 283, 36);
-		contentPane.add(passwordField);
-		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(395, 293, 283, 36);
-		contentPane.add(passwordField_1);
-		
-		JLabel lbl_close = new JLabel("X");
-		lbl_close.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-				System.exit(0);
+		button.setFont(new Font("Dialog", Font.PLAIN, 15));
+		button.setBackground(new Color(47, 79, 79));
+		button.setBounds(-16, 112, 222, 40);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new NovaMovimentacao().setVisible(true);
+
 			}
 		});
-		lbl_close.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_close.setForeground(new Color(241, 57, 83));
-		lbl_close.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lbl_close.setBounds(691, 0, 37, 27);
-		contentPane.add(lbl_close);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(464, 405, 117, 29);
-		contentPane.add(btnNewButton);
-		
-		JLabel lblFsdfsdf = new JLabel("fsdfsdf");
-		lblFsdfsdf.setBounds(6, 0, 340, 454);
-		contentPane.add(lblFsdfsdf);
-		lblFsdfsdf.setBackground(Color.ORANGE);
-		
-		lblFsdfsdf.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				
-				 xx = e.getX();
-			     xy = e.getY();
-			}
-		});
-		lblFsdfsdf.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent arg0) {
-				
-				int x = arg0.getXOnScreen();
-	            int y = arg0.getYOnScreen();
-	            Home.this.setLocation(x - xx, y - xy);  
-			}
-		});
-		lblFsdfsdf.setVerticalAlignment(SwingConstants.TOP);
-		lblFsdfsdf.setIcon(new ImageIcon(Home.class.getResource("/images/bg.jpg")));
+
+		panel.add(button);
+
+		JLabel lblFundo = new JLabel("Nova Movimenta\u00E7\u00E3o");
+		lblFundo.setIcon(new ImageIcon(Home.class.getResource("/img/essa - Copia.jpg")));
+		lblFundo.setBounds(0, 0, 188, 553);
+		panel.add(lblFundo);
+
+		JPanel Home = new JPanel();
+		Home.setBackground(Color.WHITE);
+		Home.setBounds(187, 0, 645, 553);
+		contentPane.add(Home);
+
 	}
 }

@@ -1,16 +1,15 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Color;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
@@ -18,19 +17,19 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.sql.ResultSet;
+
 
 import javax.swing.JPasswordField;
+import javax.swing.JButton;
 
 public class Login extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField email;
-	int xx,xy;
 	private JPasswordField senha;
 	/**
 	 * Launch the application.
@@ -68,19 +67,19 @@ public class Login extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblBemV = new JLabel("Bem V");
-		lblBemV.setBounds(136, 490, 56, 16);
-		panel.add(lblBemV);
-		
 		JLabel label = new JLabel("");
 		
-		label.addMouseListener(new MouseAdapter() {
+		/*
+		 * 	label.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				  xx = e.getX();
 			      xy = e.getY();
 
 			}
+			
+			
 		});
 		label.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
@@ -90,18 +89,23 @@ public class Login extends JFrame {
 		        Login.this.setLocation(x - xx, y - xy); 
 			}
 		});
+		*/
 		label.setIcon(new ImageIcon(Login.class.getResource("/img/essa - Copia.jpg")));
-		label.setBounds(0, 0, 350, 553);
+		label.setBounds(0, 0, 350, 555);
 		panel.add(label);
 		
 		Button button = new Button("Login");
+		button.setFont(new Font("Dialog", Font.PLAIN, 18));
 		button.setForeground(Color.WHITE);
 		button.setBackground(new Color(47, 79, 79));
 		button.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
-				if(email.getText().equals("") || senha.getText().equals("")){
-		            JOptionPane.showMessageDialog(null, "Login ou Senha inválido.", "Erro ao fazer login", JOptionPane.ERROR_MESSAGE);
-		        }else {
+				if(email.getText().equals("a") || senha.getText().equals("a")){
+		            JOptionPane.showMessageDialog(contentPane, "Seja Bem vindo!", "", JOptionPane.INFORMATION_MESSAGE);
+		            setVisible(false);
+					new Home().setVisible(true); 
+				}else {
 		        	/*
 		        	//conexão com o banco de dados
 		        	//Não pode estar aqui, tem que estar em outro lugar
@@ -122,8 +126,8 @@ public class Login extends JFrame {
 	                        //vai para tela home, tem que levar algumas informações. tipo saldo, salário
 	                    }else{
 	                    */
-	                    	 JOptionPane.showMessageDialog(null, "Login ou Senha inválido.", "Erro ao fazer login", JOptionPane.ERROR_MESSAGE);
-	                    	 email.setText("");
+		        	
+		        			JOptionPane.showMessageDialog(contentPane, "Login ou Senha inválido.", "Erro ao fazer login", JOptionPane.ERROR_MESSAGE);
 	                    	 senha.setText("");
 	                    //}
 		      //  }
@@ -132,7 +136,7 @@ public class Login extends JFrame {
 	
 		});
 		
-		button.setBounds(494, 436, 177, 33);
+		button.setBounds(496, 390, 177, 33);
 		contentPane.add(button);
 		
 		email = new JTextField();
@@ -167,5 +171,24 @@ public class Login extends JFrame {
 		senha = new JPasswordField();
 		senha.setBounds(401, 305, 383, 33);
 		contentPane.add(senha);
+		
+		Button button_1 = new Button("Cadastre-se");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				//new CadastroUsuario().setVisible(true); 
+				//CadastroUsuario TelaUsu = new CadastroUsuario();
+				//TelaUsu.setVisible(true);
+				//telaUsu.panel.setVisible(true);
+				//TelaPrincipal telaP = new TelaPrincipal(); telaP.frmFrenteDeCaixa.setVisible(true);
+				
+				new CadastroUsuario1().setVisible(true); 
+			}
+		});
+		button_1.setFont(new Font("Dialog", Font.ITALIC, 17));
+		button_1.setForeground(Color.BLACK);
+		button_1.setBackground(Color.WHITE);
+		button_1.setBounds(468, 476, 261, 33);
+		contentPane.add(button_1);
 	}
 }
