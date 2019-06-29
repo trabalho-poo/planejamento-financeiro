@@ -61,7 +61,7 @@ public class BancoDeDados {
 	public void inserirContato(Usuario _usuario){
 		try{
 			StringBuilder query = new StringBuilder();
-			query.append("INSERT INTO usuario (nome,email,senha,rg,cpf,sexo,dataNascimento_idData) VALUES (");
+			query.append("INSERT INTO planejamento.Usuario (nome,email,senha,rg,cpf,sexo,dataNascimento_idData) VALUES (");
 			query.append("'");
 			query.append(_usuario.getNome());
 			query.append("','");
@@ -86,7 +86,7 @@ public class BancoDeDados {
 
 	public void inserirData(Data _data) throws SQLException{
 		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO data (dia,mes,ano) VALUES (");
+		query.append("INSERT INTO planejamento.Data (dia,mes,ano) VALUES (");
 		query.append("'");
 		query.append(_data.getDia());
 		query.append("','");
@@ -100,7 +100,7 @@ public class BancoDeDados {
 
 	public int idData(Data _data) throws SQLException{
 		this.inserirData(_data);
-		String query = "SELECT FIRST (idData) from data ORDER BY idData DESC";
+		String query = "SELECT * from planejamento.Data ORDER BY idData DESC LIMIT 1";
 		this.resultSet = this.statement.executeQuery(query);
 		this.statement = this.connection.createStatement();
 		while(this.resultSet.next()) {
@@ -110,10 +110,14 @@ public class BancoDeDados {
 		}
 		return 0;
 	}
+	
+	public String stringData(int idData) {
+		
+	}
 
 	public void listarMovimentacoes() {
 		try {
-			String query = "SELECT * FROM movimentacao ORDER BY data";
+			String query = "SELECT * FROM planejamento.Movimentacao ORDER BY data";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			while(this.resultSet.next()) {
