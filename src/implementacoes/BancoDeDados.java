@@ -57,7 +57,7 @@ public class BancoDeDados {
 		}
 	}
 
-	public static void inserirContato(Usuario _usuario){
+	public void inserirContato(Usuario _usuario){
 		try{
 			Stringbuilder query = new StringBuilder();
 			query.append("INSERT INTO usuario (nome,email,senha,rg,cpf,sexo,dataNascimento_idData) VALUES (");
@@ -83,12 +83,30 @@ public class BancoDeDados {
 		}
 	}
 
-	public static void inserirData(Data _data){
+	public void inserirData(Data _data){
+		Stringbuilder query = new StringBuilder();
+		query.append("INSERT INTO data (dia,mes,ano) VALUES (");
+		query.append("'");
+		query.append(_data.dia);
+		query.append("','");
+		query.append(_data.mes);
+		query.append("','");
+		query.append(_data.ano);
+		query.append("');");
 
+		this.statement.executeUpdate(query.toString());
 	}
 
-	public static int idData(Data _data){
-
+	public int idData(Data _data){
+		inserirData(Data _data);
+		String query = "SELECT FIRST (idData) from data ORDER BY idData DESC";
+		this.resultSet = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		while(this.resultSet.next()) {
+			StringBuilder resultset = new StringBuilder();
+			resultset.append(this.resultSet.getString("idData"));
+			return Integer.parseInt(resultset.toString());
+		}
 	}
 
 	public void listarMovimentacoes() {
