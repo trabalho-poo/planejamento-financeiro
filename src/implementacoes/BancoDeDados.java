@@ -3,6 +3,7 @@ package implementacoes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class BancoDeDados {
@@ -59,22 +60,22 @@ public class BancoDeDados {
 
 	public void inserirContato(Usuario _usuario){
 		try{
-			Stringbuilder query = new StringBuilder();
+			StringBuilder query = new StringBuilder();
 			query.append("INSERT INTO usuario (nome,email,senha,rg,cpf,sexo,dataNascimento_idData) VALUES (");
 			query.append("'");
-			query.append(_usuario.nome);
+			query.append(_usuario.getNome());
 			query.append("','");
-			query.append(_usuario.email);
+			query.append(_usuario.getEmail());
 			query.append("','");
-			query.append(_usuario.senha);
+			query.append(_usuario.getSenha());
 			query.append("','");
-			query.append(_usuario.rg);
+			query.append(_usuario.getRg());
 			query.append("','");
-			query.append(_usuario.cpf);
+			query.append(_usuario.getCpf());
 			query.append("','");
-			query.append(_usuario.sexo);
+			query.append(_usuario.getSexo().toString());
 			query.append("','");
-			query.append(idData(_usuario.dataNascimento));
+			query.append(idData(_usuario.getDataNascimento()));
 			query.append("');");
 
 			this.statement.executeUpdate(query.toString());
@@ -83,22 +84,22 @@ public class BancoDeDados {
 		}
 	}
 
-	public void inserirData(Data _data){
-		Stringbuilder query = new StringBuilder();
+	public void inserirData(Data _data) throws SQLException{
+		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO data (dia,mes,ano) VALUES (");
 		query.append("'");
-		query.append(_data.dia);
+		query.append(_data.getDia());
 		query.append("','");
-		query.append(_data.mes);
+		query.append(_data.getMes());
 		query.append("','");
-		query.append(_data.ano);
+		query.append(_data.getAno());
 		query.append("');");
 
 		this.statement.executeUpdate(query.toString());
 	}
 
-	public int idData(Data _data){
-		inserirData(Data _data);
+	public int idData(Data _data) throws SQLException{
+		this.inserirData(_data);
 		String query = "SELECT FIRST (idData) from data ORDER BY idData DESC";
 		this.resultSet = this.statement.executeQuery(query);
 		this.statement = this.connection.createStatement();
@@ -107,6 +108,7 @@ public class BancoDeDados {
 			resultset.append(this.resultSet.getString("idData"));
 			return Integer.parseInt(resultset.toString());
 		}
+		return 0;
 	}
 
 	public void listarMovimentacoes() {
