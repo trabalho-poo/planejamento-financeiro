@@ -8,7 +8,8 @@ import java.sql.Statement;
 
 public class BancoDeDados {
 	public static final String PREFIX 		= "jdbc:mysql:";
-	public static final String HOSTNAME 	= "localhost";
+	// public static final String HOSTNAME 	= "localhost";
+	public static final String HOSTNAME 	= "127.0.0.1";
 	public static final String PORT 		= "3306";
 	public static final String DATABASE 	= "planejamento";
 	public static final String TIMEZONE 	= "useTimezone=true&serverTimezone=UTC";
@@ -25,7 +26,9 @@ public class BancoDeDados {
 		this.resultSet = null;
 	}
 
+
 	public void conectar() throws Exception {
+//		Class.forName("com.mysql.jdbc.Driver");
 		// monta a url do banco (exemplo: jdbc:mysql://localhost:3306/compras?useTimezone=true&serverTimezone=UTC)
 		String url = BancoDeDados.PREFIX + "//" + BancoDeDados.HOSTNAME + ":" + BancoDeDados.PORT + "/" + BancoDeDados.DATABASE + "?" + BancoDeDados.TIMEZONE;
 		// estabele uma conex�o com o banco de dados em 'url'
@@ -100,7 +103,7 @@ public class BancoDeDados {
 
 	public int idData(Data _data) throws SQLException{
 		this.inserirData(_data);
-		String query = "SELECT * from planejamento.Data ORDER BY idData DESC LIMIT 1";
+		String query = "SELECT (idData) from planejamento.Data ORDER BY idData DESC LIMIT 1";
 		this.resultSet = this.statement.executeQuery(query);
 		this.statement = this.connection.createStatement();
 		while(this.resultSet.next()) {
@@ -110,9 +113,9 @@ public class BancoDeDados {
 		}
 		return 0;
 	}
-	
+
 	public String stringData(int idData) {
-		
+		return "a";
 	}
 
 	public void listarMovimentacoes() {
@@ -132,6 +135,57 @@ public class BancoDeDados {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
+
+	//Codigo banco de dados:
+//	-- -----------------------------------------------------
+//	-- Table `planejamento`.`Data`
+//	-- -----------------------------------------------------
+//	CREATE TABLE IF NOT EXISTS `planejamento`.`Data` (
+//	  idData INT NOT NULL AUTO_INCREMENT,
+//	  dia INT NULL,
+//	  mes INT NULL,
+//	  ano INT NULL,
+//	  PRIMARY KEY (`idData`)
+//	  );
+//
+//	-- -----------------------------------------------------
+//	-- Table `planejamento`.`Usuario`
+//	-- -----------------------------------------------------
+//	CREATE TABLE IF NOT EXISTS `planejamento`.`Usuario` (
+//	  idUsuario INT NOT NULL AUTO_INCREMENT,
+//	  nome VARCHAR(45) NOT NULL,
+//	  email VARCHAR(45) NOT NULL,
+//	  senha VARCHAR(45) NOT NULL,
+//	  dataNascimento_idData INT NOT NULL,
+//	  FOREIGN KEY (`dataNascimento_idData`)
+//	  REFERENCES `planejamento`.`Data` (`idData`)
+//	  ON DELETE NO ACTION,
+//	  rg VARCHAR(45) NOT NULL,
+//	  cpf VARCHAR(45) NOT NULL,
+//	  sexo ENUM('MASCULINO', 'FEMININO') NOT NULL,
+//	  PRIMARY KEY (`idUsuario`)
+//	  );
+//
+//	-- -----------------------------------------------------
+//	-- Table `planejamento`.`Movimentacao`
+//	-- -----------------------------------------------------
+//	CREATE TABLE IF NOT EXISTS `planejamento`.`Movimentacao` (
+//	  idMovimentacao INT NOT NULL AUTO_INCREMENT,
+//	  valor DOUBLE NOT NULL,
+//	  descricao VARCHAR(45) NOT NULL,
+//	  Usuario_idUsuario INT NOT NULL,
+//	  Data_idData INT NOT NULL,
+//	  tipo ENUM('RECEITA', 'DESPESA') NOT NULL,
+//	  tipoReceita ENUM('SALARIO', 'OUTROS') NULL,
+//	  tipoDespesa ENUM('ACADEMIA', 'AGUA', 'ALUGUEL', 'CLUBE', 'INTERNET', 'TELEFONE', 'LUZ', 'SUPERMERCADO', 'OUTROS') NULL,
+//	  PRIMARY KEY (`idMovimentacao`),
+//	    FOREIGN KEY (`Usuario_idUsuario`)
+//	    REFERENCES `planejamento`.`Usuario` (`idUsuario`)
+//	    ON DELETE NO ACTION,
+//	    FOREIGN KEY (`Data_idData`)
+//	    REFERENCES `planejamento`.`Data` (`idData`)
+//	    ON DELETE NO ACTION
+//	    ON UPDATE NO ACTION);
 
 
 }
