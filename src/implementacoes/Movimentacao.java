@@ -1,36 +1,38 @@
 package implementacoes;
 
+/**
+ * Classe para a geracao de Movimentacao que sera
+ * utilizada ao longo do programa.
+ * 
+ * @author Grupo (Cleisson diLauro, Franco Flores, Guilherme Mattos, Luciano
+ *         Alves, Natalia Lopes)
+ * @version 1.0 (junho-2019)
+ */
 public class Movimentacao {
 	private Data data;
 	private String descricao;
 	private Double valor;
 	
 	/**
-	 * @param data
-	 * @param descricao
-	 * @param valor
+	 * Construtor completo para criacao de uma Movimentacao.
+	 * @param _data
+	 * @param _descricao
+	 * @param _valor
 	 */
 	public Movimentacao(Data _data, String _descricao, Double _valor) {
 		this.setData(_data);
 		this.setDescricao(_descricao);
 		this.setValor(_valor);
 	}
-	
-	/**
-	 * 
-	 */
-	public Movimentacao() {
-	}
-
 
 	/**
-	 * @return the data
+	 * @return A data da movimentacao
 	 */
 	public Data getData() {
 		return this.data;
 	}
 	/**
-	 * @param data the data to set
+	 * @param _data 
 	 */
 	public void setData(Data _data) {
 		this.data = _data;
@@ -42,7 +44,7 @@ public class Movimentacao {
 		return this.descricao;
 	}
 	/**
-	 * @param descricao the descricao to set
+	 * @param _descricao the descricao to set
 	 */
 	public void setDescricao(String _descricao) {
 		this.descricao = _descricao;
@@ -54,11 +56,26 @@ public class Movimentacao {
 		return this.valor;
 	}
 	/**
-	 * @param valor the valor to set
+	 * @param _valor the valor to set
 	 */
 	public void setValor(Double _valor) {
 		this.valor = _valor;
 	}
-	
-	
+
+	/**
+	 * Sobreposicaoo do metodo toString para retornar todo o conteudo do objeto
+	 * 
+	 * @return retorna uma String com todos os dados cadastrados da Movimentacao. 
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\nData: ");
+		builder.append(getData());
+		builder.append("\n");
+		builder.append(getDescricao());
+		builder.append("\nValor: ");
+		builder.append(getValor());
+		return builder.toString();
+	}
 }

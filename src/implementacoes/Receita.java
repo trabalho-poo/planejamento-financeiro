@@ -4,7 +4,8 @@ package implementacoes;
  * Classe para a geracao de Movimentacoes do tipo Receita, que contem
  * metodos para criar e editar receitas, que sera utilizada ao longo do programa.
  * 
- * @author Guilherme Mattos
+ * @author Grupo (Cleisson diLauro, Franco Flores, Guilherme Mattos, Luciano
+ *         Alves, Natalia Lopes)
  * @version 1.0 (junho-2019)
  */
 public class Receita extends Movimentacao {
@@ -24,7 +25,7 @@ public class Receita extends Movimentacao {
 	}
 
 	/**
-	 * Metodo parar retornar o tipo da movimentacao.
+	 * Metodo para retornar o tipo da movimentacao.
 	 * @return tipo de movimentacao
 	 */
 	public TipoReceita getTipo() {
@@ -39,5 +40,19 @@ public class Receita extends Movimentacao {
 		this.tipo = _tipo;
 	}
 
+	/**
+	 * Sobreposicaoo do metodo toString para retornar todo o conteudo do objeto
+	 * 
+	 * @return retorna uma String com todos os dados cadastrados da receita 
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\nTipo: ");
+		builder.append(getTipo());
+		builder.append(super.toString());
+		return builder.toString();
+	}
 
+	
 }
