@@ -17,6 +17,8 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 
+import implementacoes.BancoDeDados;
+
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -68,7 +70,7 @@ public class Home extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Home(int _idUsuario) {
+	public Home(int _idUsuario, BancoDeDados bd) {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 850, 600);
@@ -142,16 +144,28 @@ public class Home extends JFrame {
 
 
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Salário", new Integer(10));
-		pieDataset.setValue("Telefone", new Integer(20));
-		pieDataset.setValue("Outros", new Integer(30));
-		JFreeChart chart = ChartFactory.createPieChart("Movimentações", pieDataset, true, true, true);
+//		BancoDeDados bd = new BancoDeDados();
+//		try {
+//			bd.conectar();
+//			if(bd.isConectado()) {
+//				
+//				pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa()));
+//				pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita()));
+//			}
+//		}catch(Exception e) {
+//			
+//		}
+		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa()));
+		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita()));
+//		pieDataset.setValue("Despesa", new Integer(bd.getPorcentagemDespesa()));
+//		pieDataset.setValue("Receita", new Integer(20));
+		JFreeChart chart = ChartFactory.createPieChart("Tipo de movimentação", pieDataset, true, true, true);
 		
 		DefaultPieDataset pie2 = new DefaultPieDataset();
-		pie2.setValue("Salário", new Integer(10));
+		pie2.setValue("Academia", new Integer(10));
 		pie2.setValue("Telefone", new Integer(20));
 		pie2.setValue("Outros", new Integer(30));
-		JFreeChart chart2 = ChartFactory.createPieChart("Movimentações", pie2, true, true, true);
+		JFreeChart chart2 = ChartFactory.createPieChart("Tipo das despesas", pie2, true, true, true);
 		//		P.setForegroundAlpha(TOP_ALIGNMENT);
 		ChartPanel grafico = new ChartPanel(chart);
 		grafico.setBounds(187, 0, 291, 277);

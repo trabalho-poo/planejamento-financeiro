@@ -215,6 +215,64 @@ public class BancoDeDados {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
+	
+	public double getPorcentagemDespesa() {
+		try {
+			String query = "SELECT * FROM planejamento.Movimentacao";
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			double porcentagem = 0.0;
+			double receita = 0.0, despesa = 0.0;
+			while (this.resultSet.next()) {
+				StringBuilder resultset = new StringBuilder();
+				if(this.resultSet.getString("tipo").equalsIgnoreCase("receita")) {
+					receita += Double.parseDouble(this.resultSet.getString("valor"));
+				}else {
+					despesa += Double.parseDouble(this.resultSet.getString("valor"));
+				}
+				if((receita+despesa) == 0.0) {
+					return 0.0;
+				}else {
+					porcentagem = despesa*100/(receita+despesa);
+				}
+			}
+			return porcentagem;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+			return 0.0;
+		}
+		
+	}
+	
+	public double getPorcentagemReceita() {
+		try {
+			String query = "SELECT * FROM planejamento.Movimentacao";
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			double porcentagem = 0.0;
+			double receita = 0.0, despesa = 0.0;
+			while (this.resultSet.next()) {
+				if(this.resultSet.getString("tipo").equalsIgnoreCase("receita")) {
+					receita += Double.parseDouble(this.resultSet.getString("valor"));
+				}else {
+					despesa += Double.parseDouble(this.resultSet.getString("valor"));
+				}
+				if((receita+despesa) == 0.0) {
+					return 0;
+				}else {
+					porcentagem = receita*100/(receita+despesa);
+				}
+			}
+			return porcentagem;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+			return 0;
+		}
+		
+	}
+	public double getPorcentagemTipo(String _tipoGeral, String _tipoEspecifico) {
+		return 0;
+	}
 
 	// Codigo banco de dados:
 //	-- -----------------------------------------------------

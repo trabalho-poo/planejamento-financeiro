@@ -115,7 +115,7 @@ public class Login extends JFrame {
 							JOptionPane.showMessageDialog(contentPane, "Seja Bem vindo!", "", JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
 							//new Home().setVisible(true);
-							new Home(bd.idUsuario(email.getText())).setVisible(true); 
+							new Home(bd.idUsuario(email.getText()),bd).setVisible(true); 
 						}else {		        	 
 							JOptionPane.showMessageDialog(contentPane, "Login ou Senha inválido.", "Erro ao fazer login", JOptionPane.ERROR_MESSAGE);
 							senha.setText("");
