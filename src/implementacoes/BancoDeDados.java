@@ -6,6 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Oferece metodos de cadastro e edicao de informacoes no Banco de Dados.
+ * <p>
+ *
+ * @author Grupo (Cleisson diLauro, Franco Flores, Guilherme Mattos, Luciano
+ *         Alves, Natalia Lopes)
+ * @version 1.0 (julho-2019)
+ *
+ */
 public class BancoDeDados {
 	public static final String PREFIX 		= "jdbc:mysql:";
 	// public static final String HOSTNAME 	= "localhost";

@@ -54,5 +54,21 @@ public class Receita extends Movimentacao {
 		return builder.toString();
 	}
 
-	
+	public int compareTipo(Receita _receita) {
+		String aux;
+		String aux2;
+		if (_receita.getTipo() == TipoReceita.SALARIO) {
+			aux = "salario";
+		}
+		else{
+			aux = "outro";
+		}
+		if (this.getTipo() == TipoReceita.SALARIO) {
+			aux2 = "salario";
+		}
+		else{
+			aux2 = "outro";
+		}
+		return (aux2.compareToIgnoreCase(aux));
+	}
 }
