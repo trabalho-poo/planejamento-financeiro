@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class Login extends JFrame {
 
@@ -131,7 +132,7 @@ public class Login extends JFrame {
 			}
 		});
 
-		button.setBounds(496, 390, 177, 33);
+		button.setBounds(508, 391, 177, 33);
 		contentPane.add(button);
 
 		email = new JTextField();
@@ -158,9 +159,10 @@ public class Login extends JFrame {
 		contentPane.add(separator_1);
 
 		JLabel lblLogin = new JLabel("LOGIN");
+		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setEnabled(false);
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblLogin.setBounds(531, 32, 140, 75);
+		lblLogin.setBounds(531, 32, 137, 75);
 		contentPane.add(lblLogin);
 
 		senha = new JPasswordField();

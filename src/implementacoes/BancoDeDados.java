@@ -153,6 +153,46 @@ public class BancoDeDados {
 		}
 		return 0;
 	}
+	
+	public void inserirMovimentacaoReceita(Receita _movimentacao, int _idUsuario) throws SQLException{
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO planejamento.Movimentacao (valor,descricao,Usuario_idUsuario,Data_idData,tipo,tipoReceita) VALUES (");
+		query.append("'");
+		query.append(_movimentacao.getValor());
+		query.append("','");
+		query.append(_movimentacao.getDescricao());
+		query.append("','");
+		query.append(_idUsuario);
+		query.append("','");
+		query.append(idData(_movimentacao.getData()));
+		query.append("','");
+		query.append("RECEITA");
+		query.append("','");
+		query.append(_movimentacao.getTipo().toString());
+		query.append("');");
+
+		this.statement.executeUpdate(query.toString());
+	}
+	
+	public void inserirMovimentacaoDespesa(Despesa _movimentacao, int _idUsuario) throws SQLException{
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO planejamento.Movimentacao (valor,descricao,Usuario_idUsuario,Data_idData,tipo,tipoDespesa) VALUES (");
+		query.append("'");
+		query.append(_movimentacao.getValor());
+		query.append("','");
+		query.append(_movimentacao.getDescricao());
+		query.append("','");
+		query.append(_idUsuario);
+		query.append("','");
+		query.append(idData(_movimentacao.getData()));
+		query.append("','");
+		query.append("DESPESA");
+		query.append("','");
+		query.append(_movimentacao.getTipo().toString());
+		query.append("');");
+
+		this.statement.executeUpdate(query.toString());
+	}
 
 	public String stringData(int idData) {
 		return "a";
@@ -194,7 +234,7 @@ public class BancoDeDados {
 //	CREATE TABLE IF NOT EXISTS `planejamento`.`Usuario` (
 //	  idUsuario INT NOT NULL AUTO_INCREMENT,
 //	  nome VARCHAR(45) NOT NULL,
-//	  email VARCHAR(45) NOT NULL,
+//	  email VARCHAR(45) NOT NULL UNIQUE,
 //	  senha VARCHAR(45) NOT NULL,
 //	  dataNascimento_idData INT NOT NULL,
 //	  FOREIGN KEY (`dataNascimento_idData`)

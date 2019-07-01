@@ -12,12 +12,27 @@ package implementacoes;
  */
 public class Usuario {
 	/** Campos de variaveis */
+	/**
+	 * 
+	 */
 	private String nome;
+	/**
+	 * 
+	 */
 	private Sexo sexo;
+	/**
+	 * 
+	 */
 	private Data dataNascimento;
+	/**
+	 * 
+	 */
 	private String rg;
 	private String cpf;
 	private String email;
+	/**
+	 * 
+	 */
 	private String senha;
 
 	/**

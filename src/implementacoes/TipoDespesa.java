@@ -9,5 +9,5 @@ package implementacoes;
  * @version 1.0 (junho-2019)
  */
 public enum TipoDespesa {
-	ALUGUEL, TELEFONE, INTERNET, ACADEMIA, CLUBE, SUPERMERCADO, LUZ, AGUA;
+	ALUGUEL, TELEFONE, INTERNET, ACADEMIA, CLUBE, SUPERMERCADO, LUZ, AGUA, OUTROS;
 }

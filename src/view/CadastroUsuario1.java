@@ -150,10 +150,10 @@ public class CadastroUsuario1 extends JFrame {
 		label_7.setBounds(634, 391, 140, 16);
 		panel.add(label_7);
 		
-		JLabel label_8 = new JLabel("E-mai:");
-		label_8.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		label_8.setBounds(313, 391, 56, 16);
-		panel.add(label_8);
+		JLabel lblEmail = new JLabel("E-mail:");
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblEmail.setBounds(313, 391, 56, 16);
+		panel.add(lblEmail);
 		
 		senha = new JPasswordField();
 		senha.setBounds(634, 420, 140, 22);
@@ -205,7 +205,7 @@ public class CadastroUsuario1 extends JFrame {
 		label_10.setBounds(351, 362, 384, 16);
 		panel.add(label_10);
 		
-		JButton button_1 = new JButton("voltar");
+		JButton button_1 = new JButton("Voltar");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
