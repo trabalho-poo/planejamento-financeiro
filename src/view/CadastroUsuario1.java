@@ -7,8 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import java.awt.Font;
@@ -21,15 +24,19 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
+
+import implementacoes.BancoDeDados;
+import implementacoes.Data;
 import implementacoes.Sexo;
+import implementacoes.Usuario;
 
 public class CadastroUsuario1 extends JFrame {
 	
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JPasswordField passwordField;
+	private JTextField nome;
+	private JTextField dataNascimento;
+	private JTextField email;
+	private JPasswordField senha;
 
 	/**
 	 * Launch the application.
@@ -70,15 +77,15 @@ public class CadastroUsuario1 extends JFrame {
 		label.setBounds(0, 0, 266, 560);
 		panel.add(label);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(Sexo.values()));
-		comboBox.setBounds(634, 267, 140, 27);
-		panel.add(comboBox);
+		JComboBox sexo = new JComboBox();
+		sexo.setModel(new DefaultComboBoxModel(Sexo.values()));
+		sexo.setBounds(634, 267, 140, 27);
+		panel.add(sexo);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(313, 184, 286, 22);
-		panel.add(textField);
+		nome = new JTextField();
+		nome.setColumns(10);
+		nome.setBounds(313, 184, 286, 22);
+		panel.add(nome);
 		label.setIcon(new ImageIcon(Login.class.getResource("/img/essa - Copia.jpg")));
 		JSeparator separator = new JSeparator();
 		separator.setBounds(313, 204, 251, 2);
@@ -96,10 +103,10 @@ public class CadastroUsuario1 extends JFrame {
 		label_2.setBounds(381, 13, 317, 75);
 		panel.add(label_2);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(634, 182, 140, 22);
-		panel.add(textField_1);
+		dataNascimento = new JTextField();
+		dataNascimento.setColumns(10);
+		dataNascimento.setBounds(634, 182, 140, 22);
+		panel.add(dataNascimento);
 		
 		JLabel label_3 = new JLabel("Data Nascimento:");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -115,28 +122,28 @@ public class CadastroUsuario1 extends JFrame {
 		label_4.setBounds(313, 237, 73, 16);
 		panel.add(label_4);
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(313, 269, 155, 22);
-		panel.add(formattedTextField);
+		JFormattedTextField cpf = new JFormattedTextField();
+		cpf.setBounds(313, 269, 155, 22);
+		panel.add(cpf);
 		
 		JLabel label_5 = new JLabel("RG:");
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		label_5.setBounds(480, 237, 73, 16);
 		panel.add(label_5);
 		
-		JFormattedTextField formattedTextField_1 = new JFormattedTextField();
-		formattedTextField_1.setBounds(480, 269, 119, 22);
-		panel.add(formattedTextField_1);
+		JFormattedTextField rg = new JFormattedTextField();
+		rg.setBounds(480, 269, 119, 22);
+		panel.add(rg);
 		
 		JLabel label_6 = new JLabel("Sexo:");
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		label_6.setBounds(634, 238, 73, 16);
 		panel.add(label_6);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(313, 420, 286, 22);
-		panel.add(textField_2);
+		email = new JTextField();
+		email.setColumns(10);
+		email.setBounds(313, 420, 286, 22);
+		panel.add(email);
 		
 		JLabel label_7 = new JLabel("Senha:");
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -148,11 +155,36 @@ public class CadastroUsuario1 extends JFrame {
 		label_8.setBounds(313, 391, 56, 16);
 		panel.add(label_8);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(634, 420, 140, 22);
-		panel.add(passwordField);
+		senha = new JPasswordField();
+		senha.setBounds(634, 420, 140, 22);
+		panel.add(senha);
 		
 		Button button = new Button("Cadastrar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BancoDeDados bd = new BancoDeDados();
+				try {
+					bd.conectar();
+					if(bd.isConectado()) {
+						if(sexo.getSelectedItem() == Sexo.MASCULINO) {
+							bd.inserirContato(new Usuario(nome.getText(), Sexo.MASCULINO, new Data(dataNascimento.getText()), rg.getText(), cpf.getText(), email.getText(), senha.getText()));
+						} else if(sexo.getSelectedItem() == Sexo.FEMININO) {
+							bd.inserirContato(new Usuario(nome.getText(), Sexo.FEMININO, new Data(dataNascimento.getText()), rg.getText(), cpf.getText(), email.getText(), senha.getText()));
+						}
+						JOptionPane.showMessageDialog(contentPane, "Usuário cadastrado com sucesso!", "", JOptionPane.INFORMATION_MESSAGE);
+						setVisible(false);
+						new Login().setVisible(true); 
+					}else {
+						Component contentPane = null;
+						JOptionPane.showMessageDialog(contentPane, "Não foi possivel conectar ao banco de dados", "Erro ao cadastrar usuário", JOptionPane.ERROR_MESSAGE);
+
+					}
+				} catch (Exception e) {
+					System.out.println("Erro: "+e.getMessage());
+					//e.printStackTrace();
+				}
+			}
+		});
 		button.setForeground(Color.WHITE);
 		button.setFont(new Font("Dialog", Font.PLAIN, 18));
 		button.setBackground(new Color(47, 79, 79));

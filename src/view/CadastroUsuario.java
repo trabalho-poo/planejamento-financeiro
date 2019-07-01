@@ -4,12 +4,18 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+import implementacoes.BancoDeDados;
+import implementacoes.Data;
 import implementacoes.Sexo;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 
@@ -173,7 +179,8 @@ public class CadastroUsuario extends JFrame {
 		
 		Button button = new Button("Cadastrar");
 		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
 		button.setForeground(Color.WHITE);

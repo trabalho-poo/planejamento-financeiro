@@ -3,9 +3,10 @@ package implementacoes;
 public class Uso {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
 		BancoDeDados bd = new BancoDeDados();
 		try {
+			
 			bd.conectar();
 			if(bd.isConectado()) {
 				System.out.println("Conectei ao banco de dados");
@@ -18,7 +19,7 @@ public class Uso {
 		}catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
-		
+
 	}
 
 }

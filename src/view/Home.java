@@ -37,9 +37,9 @@ public class Home extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Home frame = new Home();
-					frame.setUndecorated(true);
-					frame.setVisible(true);
+					//Home frame = new Home();
+					//frame.setUndecorated(true);
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,7 +54,8 @@ public class Home extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Home() {
+	public Home(int _idUsuario) {
+		System.out.println(_idUsuario);
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 850, 600);
