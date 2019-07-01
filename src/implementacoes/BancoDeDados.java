@@ -108,7 +108,7 @@ public class BancoDeDados {
 		this.resultSet = this.statement.executeQuery(query);
 		this.statement = this.connection.createStatement();
 		if (this.resultSet.next()) {
-			System.out.println(this.resultSet.getString("senha"));
+//			System.out.println(this.resultSet.getString("senha"));
 			if (this.resultSet.getString("senha").equals(_senha))
 				return true;
 		}
@@ -271,7 +271,48 @@ public class BancoDeDados {
 		
 	}
 	public double getPorcentagemTipo(String _tipoGeral, String _tipoEspecifico) {
-		return 0;
+		try {
+			String query = "SELECT * FROM planejamento.Movimentacao";
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			double porcentagem = 0.0;
+			double especifico = 0.0, total = 0.0;
+			while (this.resultSet.next()) {
+				if(_tipoGeral.equalsIgnoreCase("RECEITA")) {
+					if(this.resultSet.getString("tipo").equalsIgnoreCase(_tipoGeral)) {
+						if(this.resultSet.getString("tipoReceita").equalsIgnoreCase(_tipoEspecifico)) {
+							especifico += Double.parseDouble(this.resultSet.getString("valor"));
+							total += Double.parseDouble(this.resultSet.getString("valor"));
+						}else {
+							total += Double.parseDouble(this.resultSet.getString("valor"));
+						}
+					}else {
+						total += Double.parseDouble(this.resultSet.getString("valor"));
+					}
+				}else {
+					if(this.resultSet.getString("tipo").equalsIgnoreCase(_tipoGeral)) {
+						if(this.resultSet.getString("tipoDespesa").equalsIgnoreCase(_tipoEspecifico)) {
+							especifico += Double.parseDouble(this.resultSet.getString("valor"));
+							total += Double.parseDouble(this.resultSet.getString("valor"));
+						}else {
+							total += Double.parseDouble(this.resultSet.getString("valor"));
+						}
+					}else {
+						total += Double.parseDouble(this.resultSet.getString("valor"));
+					}
+				}
+
+				if(total == 0) {
+					return 0;
+				}else {
+					porcentagem = especifico*100/total;
+				}
+			}
+			return porcentagem;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+			return 0;
+		}
 	}
 
 	// Codigo banco de dados:

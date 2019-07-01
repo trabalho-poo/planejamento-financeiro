@@ -74,7 +74,7 @@ public class NovaMovimentacao extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NovaMovimentacao(int _idUsuario) {
+	public NovaMovimentacao(int _idUsuario, BancoDeDados bd) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 850, 600);
 		contentPane = new JPanel();
@@ -250,9 +250,9 @@ public class NovaMovimentacao extends JFrame {
 		Button btnSalvar = new Button("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BancoDeDados bd = new BancoDeDados();
+//				BancoDeDados bd = new BancoDeDados();
 				try {
-					bd.conectar();
+//					bd.conectar();
 					if (bd.isConectado()) {
 						if (chckb_Receita.isSelected()) {
 							// ACADEMIA", "AGUA", "ALUGUEL", "CLUBE
@@ -314,7 +314,7 @@ public class NovaMovimentacao extends JFrame {
 						JOptionPane.showMessageDialog(contentPane, "Movimentação cadastrada com sucesso!", "",
 								JOptionPane.INFORMATION_MESSAGE);
 						setVisible(false);
-						new Home(_idUsuario).setVisible(true);
+						new Home(_idUsuario, bd).setVisible(true);
 					} else {
 						Component contentPane = null;
 						JOptionPane.showMessageDialog(contentPane, "Não foi possivel conectar ao banco de dados",
@@ -338,7 +338,7 @@ public class NovaMovimentacao extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new Home(_idUsuario).setVisible(true);
+				new Home(_idUsuario, bd).setVisible(true);
 			}
 		});
 		btnVoltar.setForeground(Color.RED);

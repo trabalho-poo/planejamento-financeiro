@@ -130,7 +130,7 @@ public class Home extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new NovaMovimentacao(_idUsuario).setVisible(true);
+				new NovaMovimentacao(_idUsuario, bd).setVisible(true);
 
 			}
 		});
@@ -143,7 +143,7 @@ public class Home extends JFrame {
 		panel.add(lblFundo);
 
 
-		DefaultPieDataset pieDataset = new DefaultPieDataset();
+		
 //		BancoDeDados bd = new BancoDeDados();
 //		try {
 //			bd.conectar();
@@ -155,35 +155,86 @@ public class Home extends JFrame {
 //		}catch(Exception e) {
 //			
 //		}
+		
+		// Primeiro Grafico
+		DefaultPieDataset pieDataset = new DefaultPieDataset();
 		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa()));
 		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita()));
 //		pieDataset.setValue("Despesa", new Integer(bd.getPorcentagemDespesa()));
 //		pieDataset.setValue("Receita", new Integer(20));
 		JFreeChart chart = ChartFactory.createPieChart("Tipo de movimentação", pieDataset, true, true, true);
 		
-		DefaultPieDataset pie2 = new DefaultPieDataset();
-		pie2.setValue("Academia", new Integer(10));
-		pie2.setValue("Telefone", new Integer(20));
-		pie2.setValue("Outros", new Integer(30));
-		JFreeChart chart2 = ChartFactory.createPieChart("Tipo das despesas", pie2, true, true, true);
+		
+//		JFreeChart chart2 = ChartFactory.createPieChart("Tipo das despesas", pie2, true, true, true);
 		//		P.setForegroundAlpha(TOP_ALIGNMENT);
 		ChartPanel grafico = new ChartPanel(chart);
-		grafico.setBounds(187, 0, 291, 277);
+		grafico.setBounds(187, 0, 331, 277);
 		contentPane.add(grafico);
 		grafico.setDisplayToolTips(true);
 		grafico.setMouseWheelEnabled(true);
 		grafico.setLayout(null);
 		
+		// Segundo Grafico
+		DefaultPieDataset pie2 = new DefaultPieDataset();
+		pie2.setValue("Aluguel", new Double(bd.getPorcentagemTipo("DESPESA","ALUGUEL")));
+		pie2.setValue("Telefone", new Double(bd.getPorcentagemTipo("DESPESA","TELEFONE")));
+		pie2.setValue("Internet", new Double(bd.getPorcentagemTipo("DESPESA","INTERNET")));
+		pie2.setValue("Academia", new Double(bd.getPorcentagemTipo("DESPESA","ACADEMIA")));
+		pie2.setValue("Clube", new Double(bd.getPorcentagemTipo("DESPESA","CLUBE")));
+		pie2.setValue("Supermercado", new Double(bd.getPorcentagemTipo("DESPESA","SUPERMERCADO")));
+		pie2.setValue("Luz", new Double(bd.getPorcentagemTipo("DESPESA","LUZ")));
+		pie2.setValue("Água", new Double(bd.getPorcentagemTipo("DESPESA","AGUA")));
+		pie2.setValue("Outros", new Double(bd.getPorcentagemTipo("DESPESA","OUTROS")));
+		JFreeChart chart2 = ChartFactory.createPieChart("Tipo das despesas", pie2, true, true, true);
+		
 		ChartPanel chartPanel = new ChartPanel((JFreeChart) null);
 		chartPanel.setLayout(null);
 		chartPanel.setMouseWheelEnabled(true);
 		chartPanel.setDisplayToolTips(true);
-		chartPanel.setBounds(541, 0, 291, 277);
+		chartPanel.setBounds(521, 0, 311, 277);
 		contentPane.add(chartPanel);
+		
+		
+		// Grafico 3
+		DefaultPieDataset pie3 = new DefaultPieDataset();
+		pieDataset.setValue("TESTE", new Double(bd.getPorcentagemDespesa()));
+		pieDataset.setValue("TESTE 2", new Double(bd.getPorcentagemReceita()));
+//		pieDataset.setValue("Despesa", new Integer(bd.getPorcentagemDespesa()));
+//		pieDataset.setValue("Receita", new Integer(20));
+		JFreeChart chart3 = ChartFactory.createPieChart("Tipo de movimentação", pie3, true, true, true);
+		
+		ChartPanel grafico3 = new ChartPanel((JFreeChart) null);
+		grafico3.setLayout(null);
+		grafico3.setMouseWheelEnabled(true);
+		grafico3.setDisplayToolTips(true);
+		grafico3.setBounds(187, 276, 331, 277);
+		contentPane.add(grafico3);
+		ChartPanel grafico_3 = new ChartPanel(chart3);
+		grafico_3.setBounds(0, 0, 338, 277);
+		grafico3.add(grafico_3);
+		grafico_3.setDisplayToolTips(true);
+		grafico_3.setMouseWheelEnabled(true);
+		grafico_3.setLayout(null);
+		
+		
+		// Grafico 4
+		ChartPanel chartPanel_4 = new ChartPanel((JFreeChart) null);
+		chartPanel_4.setLayout(null);
+		chartPanel_4.setMouseWheelEnabled(true);
+		chartPanel_4.setDisplayToolTips(true);
+		chartPanel_4.setBounds(516, 276, 316, 277);
+		contentPane.add(chartPanel_2);
+		ChartPanel grafico4 = new ChartPanel(chart2);
+		grafico4.setBounds(-27, 0, 338, 277);
+		chartPanel.add(grafico4);
+		grafico4.setDisplayToolTips(true);
+		grafico4.setMouseWheelEnabled(true);
+		grafico4.setLayout(null);
 		//		P.setForegroundAlpha(TOP_ALIGNMENT);
+		
 		ChartPanel grafico2 = new ChartPanel(chart2);
-		grafico2.setBounds(0, 0, 291, 277);
-		chartPanel.add(grafico2);
+		grafico2.setBounds(521, 276, 311, 277);
+		contentPane.add(grafico2);
 		grafico2.setDisplayToolTips(true);
 		grafico2.setMouseWheelEnabled(true);
 		grafico2.setLayout(null);
