@@ -2,19 +2,21 @@ package implementacoes;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class BancoDeDados {
-	public static final String PREFIX 		= "jdbc:mysql:";
-	// public static final String HOSTNAME 	= "localhost";
-	public static final String HOSTNAME 	= "127.0.0.1";
-	public static final String PORT 		= "3306";
-	public static final String DATABASE 	= "planejamento";
-	public static final String TIMEZONE 	= "useTimezone=true&serverTimezone=UTC";
-	public static final String USER 		= "root";
-	public static final String PASSWORD 	= "skxkffldk";
+
+	public static final String PREFIX = "jdbc:mysql:";
+	public static final String HOSTNAME = "localhost";
+	// public static final String HOSTNAME = "127.0.0.1";
+	public static final String PORT = "3306";
+	public static final String DATABASE = "planejamento";
+	public static final String TIMEZONE = "useTimezone=true&serverTimezone=UTC";
+	public static final String USER = "root";
+	public static final String PASSWORD = "";
 
 	private Connection connection;
 	private Statement statement;
@@ -26,18 +28,22 @@ public class BancoDeDados {
 		this.resultSet = null;
 	}
 
-
 	public void conectar() throws Exception {
-//		Class.forName("com.mysql.jdbc.Driver");
-		// monta a url do banco (exemplo: jdbc:mysql://localhost:3306/compras?useTimezone=true&serverTimezone=UTC)
-		String url = BancoDeDados.PREFIX + "//" + BancoDeDados.HOSTNAME + ":" + BancoDeDados.PORT + "/" + BancoDeDados.DATABASE + "?" + BancoDeDados.TIMEZONE;
+
+		// Class.forName("com.mysql.jdbc.Driver");
+
+		// monta a url do banco (exemplo:
+		// jdbc:mysql://localhost:3306/compras?useTimezone=true&serverTimezone=UTC)
+		String url = BancoDeDados.PREFIX + "//" + BancoDeDados.HOSTNAME + ":" + BancoDeDados.PORT + "/"
+				+ BancoDeDados.DATABASE + "?" + BancoDeDados.TIMEZONE;
+
 		// estabele uma conex�o com o banco de dados em 'url'
-		this.connection = DriverManager.getConnection(url,  BancoDeDados.USER, BancoDeDados.PASSWORD);
+		this.connection = DriverManager.getConnection(url, BancoDeDados.USER, BancoDeDados.PASSWORD);
 		this.statement = this.connection.createStatement();
 	}
 
-	public boolean isConectado() throws Exception{
-		if(this.connection != null)
+	public boolean isConectado() throws Exception {
+		if (this.connection != null)
 			return true;
 		else
 			return false;
@@ -48,7 +54,7 @@ public class BancoDeDados {
 			String query = "SELECT * FROM usuario ORDER BY nome";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
-			while(this.resultSet.next()) {
+			while (this.resultSet.next()) {
 				StringBuilder resultset = new StringBuilder();
 				resultset.append("\nID: ");
 				resultset.append(this.resultSet.getString("id"));
@@ -56,15 +62,16 @@ public class BancoDeDados {
 				resultset.append(this.resultSet.getString("nome"));
 				System.out.println(resultset.toString());
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
 
-	public void inserirContato(Usuario _usuario){
-		try{
+	public void inserirContato(Usuario _usuario) {
+		try {
 			StringBuilder query = new StringBuilder();
-			query.append("INSERT INTO planejamento.Usuario (nome,email,senha,rg,cpf,sexo,dataNascimento_idData) VALUES (");
+			query.append(
+					"INSERT INTO planejamento.Usuario (nome,email,senha,rg,cpf,sexo,dataNascimento_idData) VALUES (");
 			query.append("'");
 			query.append(_usuario.getNome());
 			query.append("','");
@@ -82,12 +89,24 @@ public class BancoDeDados {
 			query.append("');");
 
 			this.statement.executeUpdate(query.toString());
-		}catch (Exception e){
+		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
 
-	public void inserirData(Data _data) throws SQLException{
+	public boolean acesso(String _email, String _senha) throws SQLException {
+		String query = "SELECT senha FROM planejamento.Usuario WHERE email='" + _email + "';";
+		this.resultSet = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		if (this.resultSet.next()) {
+			System.out.println(this.resultSet.getString("senha"));
+			if (this.resultSet.getString("senha").equals(_senha))
+				return true;
+		}
+		return false;
+	}
+
+	public void inserirData(Data _data) throws SQLException {
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO planejamento.Data (dia,mes,ano) VALUES (");
 		query.append("'");
@@ -101,14 +120,26 @@ public class BancoDeDados {
 		this.statement.executeUpdate(query.toString());
 	}
 
-	public int idData(Data _data) throws SQLException{
+	public int idData(Data _data) throws SQLException {
 		this.inserirData(_data);
 		String query = "SELECT (idData) from planejamento.Data ORDER BY idData DESC LIMIT 1";
 		this.resultSet = this.statement.executeQuery(query);
 		this.statement = this.connection.createStatement();
-		while(this.resultSet.next()) {
+		while (this.resultSet.next()) {
 			StringBuilder resultset = new StringBuilder();
 			resultset.append(this.resultSet.getString("idData"));
+			return Integer.parseInt(resultset.toString());
+		}
+		return 0;
+	}
+	
+	public int idUsuario(String _email) throws SQLException {
+		String query = "SELECT (idUsuario) from planejamento.Usuario WHERE email='"+_email+"';";
+		this.resultSet = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		while (this.resultSet.next()) {
+			StringBuilder resultset = new StringBuilder();
+			resultset.append(this.resultSet.getString("idUsuario"));
 			return Integer.parseInt(resultset.toString());
 		}
 		return 0;
@@ -123,7 +154,7 @@ public class BancoDeDados {
 			String query = "SELECT * FROM planejamento.Movimentacao ORDER BY data";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
-			while(this.resultSet.next()) {
+			while (this.resultSet.next()) {
 				StringBuilder resultset = new StringBuilder();
 				resultset.append("\nID: ");
 				resultset.append(this.resultSet.getString("id"));
@@ -131,12 +162,12 @@ public class BancoDeDados {
 				resultset.append(this.resultSet.getString("data"));
 				System.out.println(resultset.toString());
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
 
-	//Codigo banco de dados:
+	// Codigo banco de dados:
 //	-- -----------------------------------------------------
 //	-- Table `planejamento`.`Data`
 //	-- -----------------------------------------------------
@@ -186,6 +217,5 @@ public class BancoDeDados {
 //	    REFERENCES `planejamento`.`Data` (`idData`)
 //	    ON DELETE NO ACTION
 //	    ON UPDATE NO ACTION);
-
 
 }
