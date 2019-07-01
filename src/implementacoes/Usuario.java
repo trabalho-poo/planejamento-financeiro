@@ -11,17 +11,16 @@ package implementacoes;
  *
  */
 public class Usuario {
-	/** Campos de variaveis */
 	/**
-	 * 
+	 * Nome do usuário
 	 */
 	private String nome;
 	/**
-	 * 
+	 * Sexo do usuário (Feminino ou Masculino)
 	 */
 	private Sexo sexo;
 	/**
-	 * 
+	 * Data de nascimento do usuário
 	 */
 	private Data dataNascimento;
 	/**
