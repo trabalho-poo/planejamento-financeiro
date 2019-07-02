@@ -223,7 +223,7 @@ public class Home extends JFrame {
 		chartPanel_4.setMouseWheelEnabled(true);
 		chartPanel_4.setDisplayToolTips(true);
 		chartPanel_4.setBounds(516, 276, 316, 277);
-		contentPane.add(chartPanel_2);
+		contentPane.add(chartPanel_4);
 		ChartPanel grafico4 = new ChartPanel(chart2);
 		grafico4.setBounds(-27, 0, 338, 277);
 		chartPanel.add(grafico4);
@@ -232,12 +232,12 @@ public class Home extends JFrame {
 		grafico4.setLayout(null);
 		//		P.setForegroundAlpha(TOP_ALIGNMENT);
 		
-		ChartPanel grafico2 = new ChartPanel(chart2);
-		grafico2.setBounds(521, 276, 311, 277);
-		contentPane.add(grafico2);
-		grafico2.setDisplayToolTips(true);
-		grafico2.setMouseWheelEnabled(true);
-		grafico2.setLayout(null);
+//		ChartPanel grafico2 = new ChartPanel(chart2);
+//		grafico2.setBounds(521, 276, 311, 277);
+//		contentPane.add(grafico2);
+//		grafico2.setDisplayToolTips(true);
+//		grafico2.setMouseWheelEnabled(true);
+//		grafico2.setLayout(null);
 
 		//		JButton Chart = new JButton("BOTAOGRAFICO");
 		//		Chart.addActionListener(new ActionListener() {
