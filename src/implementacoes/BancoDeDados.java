@@ -24,8 +24,8 @@ public class BancoDeDados {
 	public static final String PORT = "3306";
 	public static final String DATABASE = "planejamento";
 	public static final String TIMEZONE = "useTimezone=true&serverTimezone=UTC";
-	public static final String USER = "rodolphorod";
-	public static final String PASSWORD = "rodolphorod";
+	public static final String USER = "root";
+	public static final String PASSWORD = "root";
 
 	private Connection connection;
 	private Statement statement;
