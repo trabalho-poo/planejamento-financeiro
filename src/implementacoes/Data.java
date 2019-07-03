@@ -32,6 +32,7 @@ public class Data {
 	 * 
 	 * @param _mes mes da data como um inteiro
 	 * @param _ano ano da data como um inteiro
+	 * @throws Exception Caso seja passado uma data invalida
 	 */
 	public Data(int _mes, int _ano) throws Exception {
 		this.setData(1, _mes, _ano);
@@ -42,6 +43,7 @@ public class Data {
 	 * @param _dia dia da data como um inteiro
 	 * @param _mes mes da data como um inteiro
 	 * @param _ano ano da data como um inteiro
+	 * @throws Exception Caso seja passado uma data invalida
 	 */
 	public Data(int _dia, int _mes, int _ano) throws Exception {
 		this.setData(_dia, _mes, _ano);
@@ -54,6 +56,7 @@ public class Data {
 	 * @param _dia dia da data como um inteiro
 	 * @param _mes mes da data como uma String
 	 * @param _ano ano da data como um inteiro
+	 * @throws Exception Caso seja passado uma data invalida
 	 */
 	public Data(int _dia, String _mes, int _ano) throws Exception {
 		this.setData(_dia, this.setMes(_mes), _ano);
@@ -63,6 +66,7 @@ public class Data {
 	 * Construtor com Data completa passada em string
 	 * 
 	 * @param data data completa passada como String
+	 * @throws Exception Caso seja passado uma data invalida
 	 */
 	public Data(String data) throws Exception {
 		setDataString(data);
@@ -139,6 +143,7 @@ public class Data {
 	 * ao campo mes da Data.
 	 * 
 	 * @param _mes mes da data como uma String.
+	 * @return mes como inteiro.
 	 */
 	public int setMes(String _mes) {
 		_mes = _mes.toLowerCase();
@@ -241,7 +246,7 @@ public class Data {
 
 	/**
 	 * Metodo para verificar se o ano passado como parametro e Bissextp
-	 * @param _ano
+	 * @param _ano Ano para verificacao
 	 * @return true se for bisexto, caso contrario, false.
 	 */
 	public static boolean isBissexto(int _ano) {
@@ -258,11 +263,11 @@ public class Data {
 
 	/**
 	 * /**
-	 * Metodo para verificar se o data passada como parametro esta
+	 * Metodo para verificar se a data passada como parametro esta
 	 * em um intervalo valido.
-	 * @param _dia
-	 * @param _mes
-	 * @param _ano
+	 * @param _dia O dia
+	 * @param _mes O mes
+	 * @param _ano O ano
 	 * @return true se a Data foi valida, caso contrario, false.
 	 */
 	public static boolean isDataValida(int _dia, int _mes, int _ano) {
@@ -338,6 +343,7 @@ public class Data {
 	/**
 	 * Método que chama o algoritimo de comparacao de Data.
 	 * 
+	 * @param _data Data a ser comparada
 	 * @return inteiro retornado no metodo sobrecarregado compareTo 
 	 */
 	public int compareTo(Data _data) {
@@ -348,6 +354,12 @@ public class Data {
 	/**
 	 * Método sobrecarregado que fornece um algoritmo para comparar elementos na busca.
 	 * 
+	 * @param _dia1 dia do primeiro objeto
+	 * @param _mes1 mes do primeiro objeto
+	 * @param _ano1 ano do primeiro objeto
+	 * @param _dia2 dia do segundo objeto
+	 * @param _mes2 mes do segundo objeto
+	 * @param _ano2 ano do segundo objeto
 	 * @return inteiro, 1 se maior, -1 se menor ou 0 se igual
 	 */
 	public static int compareTo(int _dia1, int _mes1, int _ano1, int _dia2, int _mes2, int _ano2) {
