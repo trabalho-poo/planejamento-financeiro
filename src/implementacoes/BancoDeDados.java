@@ -24,8 +24,8 @@ public class BancoDeDados {
 	public static final String PORT = "3306";
 	public static final String DATABASE = "planejamento";
 	public static final String TIMEZONE = "useTimezone=true&serverTimezone=UTC";
-	public static final String USER = "rodolphorod";
-	public static final String PASSWORD = "rodolphorod";
+	public static final String USER = "root";
+	public static final String PASSWORD = "";
 
 	private Connection connection;
 	private Statement statement;
@@ -37,6 +37,9 @@ public class BancoDeDados {
 		this.resultSet = null;
 	}
 
+	/**
+	 * Faz conexão com o banco de dados
+	 */
 	public void conectar() throws Exception {
 
 		// Class.forName("com.mysql.jdbc.Driver");
@@ -51,6 +54,10 @@ public class BancoDeDados {
 		this.statement = this.connection.createStatement();
 	}
 
+	/**
+	 * Verifica a conexão do banco de dados
+	 * @return true para conexão realizada com sucesso <p> false banco de dados não conectado
+	 */
 	public boolean isConectado() throws Exception {
 		if (this.connection != null)
 			return true;
@@ -58,24 +65,32 @@ public class BancoDeDados {
 			return false;
 	}
 
-	public void listarUsuarios() {
+	/**
+	 * Faz conexão com o banco de dados
+	 */
+	public String listarUsuarios() {
 		try {
 			String query = "SELECT * FROM usuario ORDER BY nome";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
+			StringBuilder resultset = new StringBuilder();
 			while (this.resultSet.next()) {
-				StringBuilder resultset = new StringBuilder();
 				resultset.append("\nID: ");
 				resultset.append(this.resultSet.getString("id"));
 				resultset.append(" - Nome: ");
 				resultset.append(this.resultSet.getString("nome"));
-				System.out.println(resultset.toString());
 			}
+			return resultset.toString();
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
+			return null;
 		}
 	}
 
+	/**
+	 * Insere um usuário no banco de dados
+	 * @param _usuario Uma instancia da classe Usuario
+	 */
 	public void inserirContato(Usuario _usuario) {
 		try {
 			StringBuilder query = new StringBuilder();
@@ -102,19 +117,26 @@ public class BancoDeDados {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
-
+	/**
+	 * Faz uma autenticação de um usuario
+	 * @param _email E-mail do usuário
+	 * @param _senha Senha do Usuário
+	 * @return true caso o email e senha estejam cadastrados e corretos <p> false para usuário não cadastrado ou alguma informação esteja incorreta
+	 */
 	public boolean acesso(String _email, String _senha) throws SQLException {
 		String query = "SELECT senha FROM planejamento.Usuario WHERE email='" + _email + "';";
 		this.resultSet = this.statement.executeQuery(query);
 		this.statement = this.connection.createStatement();
 		if (this.resultSet.next()) {
-//			System.out.println(this.resultSet.getString("senha"));
 			if (this.resultSet.getString("senha").equals(_senha))
 				return true;
 		}
 		return false;
 	}
-
+	/**
+	 * Insere uma data no banco de dados
+	 * @param _data Uma instancia da classe Data
+	 */
 	public void inserirData(Data _data) throws SQLException {
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO planejamento.Data (dia,mes,ano) VALUES (");
@@ -128,7 +150,11 @@ public class BancoDeDados {
 
 		this.statement.executeUpdate(query.toString());
 	}
-
+	/**
+	 * Apartir de uma data retorna o Id da mesma
+	 * @param _data Uma instancia da classe Data
+	 * @return o id da data
+	 */
 	public int idData(Data _data) throws SQLException {
 		this.inserirData(_data);
 		String query = "SELECT (idData) from planejamento.Data ORDER BY idData DESC LIMIT 1";
@@ -141,7 +167,11 @@ public class BancoDeDados {
 		}
 		return 0;
 	}
-	
+	/**
+	 * Apartir de um email de um Usuário retorna o Id da mesmo
+	 * @param _email E-mail do usuário
+	 * @return o id do usuário
+	 */
 	public int idUsuario(String _email) throws SQLException {
 		String query = "SELECT (idUsuario) from planejamento.Usuario WHERE email='"+_email+"';";
 		this.resultSet = this.statement.executeQuery(query);
@@ -153,7 +183,11 @@ public class BancoDeDados {
 		}
 		return 0;
 	}
-	
+	/**
+	 * Insere uma movimentação do tipo Receita
+	 * @param _movimentacao Uma instancia da classe Receita
+	 * @para _idUsuario O id do usuário que fez a movimentação
+	 */
 	public void inserirMovimentacaoReceita(Receita _movimentacao, int _idUsuario) throws SQLException{
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO planejamento.Movimentacao (valor,descricao,Usuario_idUsuario,Data_idData,tipo,tipoReceita) VALUES (");
@@ -173,7 +207,11 @@ public class BancoDeDados {
 
 		this.statement.executeUpdate(query.toString());
 	}
-	
+	/**
+	 * Insere uma movimentação do tipo Despesa
+	 * @param _movimentacao Uma instancia da classe Receita
+	 * @para _idUsuario O id do usuário que fez a movimentação
+	 */
 	public void inserirMovimentacaoDespesa(Despesa _movimentacao, int _idUsuario) throws SQLException{
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO planejamento.Movimentacao (valor,descricao,Usuario_idUsuario,Data_idData,tipo,tipoDespesa) VALUES (");
@@ -194,28 +232,35 @@ public class BancoDeDados {
 		this.statement.executeUpdate(query.toString());
 	}
 
-	public String stringData(int idData) {
-		return "a";
-	}
-
-	public void listarMovimentacoes() {
+	/**
+	 * Insere uma movimentação do tipo receita
+	 * @param _movimentacao Uma instancia da classe Receita
+	 * @para _idUsuario O id do usuário que fez a movimentação
+	 */
+	public String listarMovimentacoes() {
 		try {
 			String query = "SELECT * FROM planejamento.Movimentacao ORDER BY data";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
+			StringBuilder resultset = new StringBuilder();
 			while (this.resultSet.next()) {
-				StringBuilder resultset = new StringBuilder();
+				
 				resultset.append("\nID: ");
 				resultset.append(this.resultSet.getString("id"));
 				resultset.append(" - Data: ");
 				resultset.append(this.resultSet.getString("data"));
-				System.out.println(resultset.toString());
+				
 			}
+			return  resultset.toString();
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
+			return null;
 		}
 	}
-	
+	/**
+	 * Calcula o porcentagem das despesas
+	 * @return a pordecetagem das depesas 
+	  */
 	public double getPorcentagemDespesa() {
 		try {
 			String query = "SELECT * FROM planejamento.Movimentacao";
@@ -243,7 +288,10 @@ public class BancoDeDados {
 		}
 		
 	}
-	
+	/**
+	 * Calcula o porcentagem das receita
+	 * @return a pordecetagem das receita 
+	  */	
 	public double getPorcentagemReceita() {
 		try {
 			String query = "SELECT * FROM planejamento.Movimentacao";
@@ -270,6 +318,10 @@ public class BancoDeDados {
 		}
 		
 	}
+	/**
+	 * Calcula o porcentagem do tipo
+	 * @return a pordecetagem do tipo
+	  */
 	public double getPorcentagemTipo(String _tipoGeral, String _tipoEspecifico) {
 		try {
 			String query = "SELECT * FROM planejamento.Movimentacao";
@@ -315,6 +367,10 @@ public class BancoDeDados {
 		}
 	}
 	
+	/**
+	 * Geara uma matriz com as receitas e despesas
+	 * @return uma matriz com as receitas e despesas 
+	  */
 	public Object[][] getMatrizDados(String _tipo, int _idUsuario){
 		int i = 0;
 		try {
@@ -345,6 +401,10 @@ public class BancoDeDados {
 		}
 	}
 	
+	/**
+	 * Calcula o valor das receitas
+	 * @return O valor das receitas
+	  */
 	public double getValorTotal(int _idUsuario) {
 		try {
 			double total = 0.0;
@@ -364,7 +424,10 @@ public class BancoDeDados {
 			return 0.0;
 		}
 	}
-	
+	/**
+	 * Geara uma matriz com as receitas e despesas <p> com Descrição, tipo, valor, editar, excluir 
+	 * @return uma matriz com as receitas e despesas 
+	  */
 	public Object[][] getHistorico(int _idUsuario) {
 		int i = 0;
 		try {

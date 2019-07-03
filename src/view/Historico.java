@@ -111,19 +111,22 @@ public class Historico extends JFrame {
 		panel.add(lblFundo);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(186, 33, 646, 482);
+		scrollPane.setBounds(188, 33, 644, 482);
 		contentPane.add(scrollPane);
 		String[] colunas = { "Descricao", "Tipo", "Classificacao", "Valor", "Editar", "Excluir" };
 
 		Object[][] dados = bd.getHistorico(_idUsuario);
+		
 //		for(int i=0; i< dados.length; i++) {
 //			dados[i][4] 
 //		}
 		
 		table = new JTable();
+		//table = new JTable(dados,colunas);
 		scrollPane.setViewportView(table);
 		table.getColumn("Excluir").setCellRenderer((TableCellRenderer) new ButtonRenderer());
-		table.getColumn("Excluir").setCellEditor(new ButtonEditor(new JCheckBox()));
+		table.ge
+		tColumn("Excluir").setCellEditor(new ButtonEditor(new JCheckBox()));
 
 		Button btnVoltar = new Button("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -133,6 +136,7 @@ public class Historico extends JFrame {
 				new Home(_idUsuario, bd).setVisible(true);
 			}
 		});
+		
 		btnVoltar.setForeground(Color.RED);
 		btnVoltar.setFont(new Font("Dialog", Font.PLAIN, 20));
 		btnVoltar.setBackground(Color.WHITE);
@@ -187,6 +191,7 @@ class ButtonEditor extends DefaultCellEditor {
 		button.setOpaque(true);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
 				fireEditingStopped();
 			}
 		});
@@ -194,9 +199,11 @@ class ButtonEditor extends DefaultCellEditor {
 
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		if (isSelected) {
+		
 			button.setForeground(table.getSelectionForeground());
 			button.setBackground(table.getSelectionBackground());
 		} else {
+			
 			button.setForeground(table.getForeground());
 			button.setBackground(table.getBackground());
 		}
