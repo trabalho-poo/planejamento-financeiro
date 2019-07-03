@@ -23,7 +23,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTree;
 import javax.swing.JProgressBar;
 import javax.swing.JComboBox;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 
 import implementacoes.BancoDeDados;
@@ -48,7 +47,6 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Scrollbar;
 import javax.swing.JDesktopPane;
 import javax.swing.JButton;
-import javax.swing.JRadioButton;
 
 public class NovaMovimentacao extends JFrame {
 
@@ -56,7 +54,6 @@ public class NovaMovimentacao extends JFrame {
 	private JTextField descricao;
 	private JTextField valor;
 	private JTextField data;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -107,6 +104,8 @@ public class NovaMovimentacao extends JFrame {
 		Button button_1 = new Button("Hist\u00F3rico");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new Historico(_idUsuario, bd).setVisible(true);
 			}
 		});
 		button_1.setForeground(Color.WHITE);
@@ -182,6 +181,15 @@ public class NovaMovimentacao extends JFrame {
 		lblTpo.setBounds(436, 261, 116, 16);
 		Movimentacao.add(lblTpo);
 
+		JCheckBox chckb_Receita = new JCheckBox("Receita");
+		chckb_Receita.setToolTipText("");
+		chckb_Receita.setBounds(215, 290, 81, 25);
+		Movimentacao.add(chckb_Receita);
+
+		JCheckBox chckb_Despesa = new JCheckBox("Despesa");
+		chckb_Despesa.setBounds(300, 290, 87, 25);
+		Movimentacao.add(chckb_Despesa);
+
 		JLabel lblCategoria = new JLabel("Categoria:");
 		lblCategoria.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblCategoria.setBounds(254, 261, 116, 16);
@@ -190,6 +198,43 @@ public class NovaMovimentacao extends JFrame {
 		JComboBox<?> tipo = new JComboBox();
 		tipo.setModel(new DefaultComboBoxModel(new String[] { "" }));
 		tipo.setSelectedIndex(0);
+
+		// o que vai aparecer no comboBox
+
+		// caso seja selecionado receita
+		chckb_Receita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (chckb_Despesa.isSelected() == false) {
+					if (chckb_Receita.isSelected() == true) {
+						tipo.setModel(new DefaultComboBoxModel(new String[] { "SALARIO", "OUTROS" }));
+					} else {
+						tipo.setModel(new DefaultComboBoxModel(new String[] { "" }));
+					}
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "Você já seleconou DESPESA", "Erro",
+							JOptionPane.ERROR_MESSAGE);
+					chckb_Receita.setSelected(false);
+				}
+			}
+		});
+		// caso seja selecionado DESPESA
+		chckb_Despesa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (chckb_Receita.isSelected() == false) {
+					if (chckb_Despesa.isSelected() == true) {
+						tipo.setModel(new DefaultComboBoxModel(new String[] { "ACADEMIA", "AGUA", "ALUGUEL", "CLUBE",
+								"INTERNET", "TELEFONE", "LUZ", "SUPERMERCADO", "OUTROS" }));
+					} else {
+						tipo.setModel(new DefaultComboBoxModel(new String[] { "" }));
+					}
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "Você já seleconou RECEITA", "Erro",
+							JOptionPane.ERROR_MESSAGE);
+					chckb_Despesa.setSelected(false);
+				}
+
+			}
+		});
 
 		tipo.setBounds(436, 291, 163, 22);
 		Movimentacao.add(tipo);
@@ -204,59 +249,6 @@ public class NovaMovimentacao extends JFrame {
 		lblData.setBounds(436, 154, 116, 16);
 		Movimentacao.add(lblData);
 
-		JRadioButton rdbtnDespesa = new JRadioButton("Despesa");
-		buttonGroup.add(rdbtnDespesa);
-		rdbtnDespesa.setBounds(300, 290, 87, 25);
-		//groupNivel.add(rdbtnDespesa);
-		Movimentacao.add(rdbtnDespesa);
-		
-				// o que vai aparecer no comboBox
-				
-				//ButtonGroup groupNivel = new ButtonGroup();
-				JRadioButton rdbtnReceita = new JRadioButton("Receita");
-				buttonGroup.add(rdbtnReceita);
-				rdbtnReceita.setBounds(215, 290, 81, 25);
-				//groupNivel.add(rdbtnReceita);
-				Movimentacao.add(rdbtnReceita);
-				
-				//Movimentacao.add(groupNivel);
-
-
-				// caso seja selecionado receita
-				rdbtnReceita.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						if (rdbtnDespesa.isSelected() == false) {
-							if (rdbtnReceita.isSelected() == true) {
-								tipo.setModel(new DefaultComboBoxModel(new String[] { "SALARIO", "OUTROS" }));
-							} else {
-								tipo.setModel(new DefaultComboBoxModel(new String[] { "" }));
-							}
-						} else {
-							JOptionPane.showMessageDialog(contentPane, "Você já seleconou DESPESA", "Erro",
-									JOptionPane.ERROR_MESSAGE);
-							rdbtnReceita.setSelected(false);
-						}
-					}
-				});
-		// caso seja selecionado DESPESA
-		rdbtnDespesa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (rdbtnReceita.isSelected() == false) {
-					if (rdbtnDespesa.isSelected() == true) {
-						tipo.setModel(new DefaultComboBoxModel(new String[] { "ACADEMIA", "AGUA", "ALUGUEL", "CLUBE",
-								"INTERNET", "TELEFONE", "LUZ", "SUPERMERCADO", "OUTROS" }));
-					} else {
-						tipo.setModel(new DefaultComboBoxModel(new String[] { "" }));
-					}
-				} else {
-					JOptionPane.showMessageDialog(contentPane, "Você já seleconou RECEITA", "Erro",
-							JOptionPane.ERROR_MESSAGE);
-					rdbtnDespesa.setSelected(false);
-				}
-
-			}
-		});
-		
 		Button btnSalvar = new Button("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -264,7 +256,7 @@ public class NovaMovimentacao extends JFrame {
 				try {
 //					bd.conectar();
 					if (bd.isConectado()) {
-						if (rdbtnReceita.isSelected()) {
+						if (chckb_Receita.isSelected()) {
 							// ACADEMIA", "AGUA", "ALUGUEL", "CLUBE
 							switch (((String) tipo.getSelectedItem()).toLowerCase()) {
 							case "salario":
@@ -356,6 +348,6 @@ public class NovaMovimentacao extends JFrame {
 		btnVoltar.setBackground(Color.WHITE);
 		btnVoltar.setBounds(578, 13, 57, 30);
 		Movimentacao.add(btnVoltar);
-		
+
 	}
 }

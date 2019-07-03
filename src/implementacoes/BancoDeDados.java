@@ -24,8 +24,8 @@ public class BancoDeDados {
 	public static final String PORT = "3306";
 	public static final String DATABASE = "planejamento";
 	public static final String TIMEZONE = "useTimezone=true&serverTimezone=UTC";
-	public static final String USER = "root";
-	public static final String PASSWORD = "root";
+	public static final String USER = "rodolphorod";
+	public static final String PASSWORD = "rodolphorod";
 
 	private Connection connection;
 	private Statement statement;
@@ -312,6 +312,90 @@ public class BancoDeDados {
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 			return 0;
+		}
+	}
+	
+	public Object[][] getMatrizDados(String _tipo, int _idUsuario){
+		int i = 0;
+		try {
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = "+_idUsuario+" AND tipo='"+_tipo+"');";
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			while (this.resultSet.next()) {
+				i++;
+			}
+			Object[][]  dados = new Object[i][2];
+			i=0;
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			while (this.resultSet.next()) {
+				//Avaliando o tipo passado como parâmetro para pegar o valor do tipo específico
+				if(_tipo.equalsIgnoreCase("RECEITA")) {
+					dados[i][0] = this.resultSet.getString("tipoReceita");
+				}else {
+					dados[i][0] = this.resultSet.getString("tipoDespesa");
+				}
+				dados[i][1] = this.resultSet.getString("valor");
+				i++;
+			}
+			return dados;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+			return null;
+		}
+	}
+	
+	public double getValorTotal(int _idUsuario) {
+		try {
+			double total = 0.0;
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUSuario = "+_idUsuario+";";
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			while (this.resultSet.next()) {
+				if(this.resultSet.getString("tipo").equalsIgnoreCase("RECEITA")) {
+					total += Double.parseDouble(this.resultSet.getString("valor"));
+				}else {
+					total -= Double.parseDouble(this.resultSet.getString("valor"));
+				}
+			}
+			return total;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+			return 0.0;
+		}
+	}
+	
+	public Object[][] getHistorico(int _idUsuario) {
+		int i = 0;
+		try {
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUSuario = "+_idUsuario+";";
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			while (this.resultSet.next()) {
+				i++;
+			}
+			Object[][]  dados = new Object[i][6];
+			i=0;
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			while (this.resultSet.next()) {
+				dados[i][0] = this.resultSet.getString("descricao");
+				dados[i][1] = this.resultSet.getString("tipo");
+				//Avaliando o tipo passado como parâmetro para pegar o valor do tipo específico
+				if(this.resultSet.getString("tipo").equalsIgnoreCase("RECEITA")) {
+					dados[i][2] = this.resultSet.getString("tipoReceita");
+				}else {
+					dados[i][2] = this.resultSet.getString("tipoDespesa");
+				}
+				dados[i][3] = this.resultSet.getString("valor");
+				dados[i][4] = "Editar";
+				dados[i][5] = "Excluir";
+				i++;
+			}
+			return dados;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+			return null;
 		}
 	}
 
