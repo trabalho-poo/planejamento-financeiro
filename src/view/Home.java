@@ -117,6 +117,8 @@ public class Home extends JFrame {
 
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new Relatorio(_idUsuario,bd).setVisible(true);
 			}
 		});
 
