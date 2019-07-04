@@ -121,12 +121,11 @@ public class Historico extends JFrame {
 //			dados[i][4]
 //		}
 
-		table = new JTable();
-		//table = new JTable(dados,colunas);
+//		table = new JTable();
+		table = new JTable(dados,colunas);
 		scrollPane.setViewportView(table);
 		table.getColumn("Excluir").setCellRenderer((TableCellRenderer) new ButtonRenderer());
-		table.ge
-		tColumn("Excluir").setCellEditor(new ButtonEditor(new JCheckBox()));
+		table.getColumn("Excluir").setCellEditor(new ButtonEditor(new JCheckBox()));
 
 		Button btnVoltar = new Button("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
