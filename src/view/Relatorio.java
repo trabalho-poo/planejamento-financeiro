@@ -24,6 +24,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import implementacoes.BancoDeDados;
 import implementacoes.Sexo;
 import implementacoes.TipoDespesa;
+import implementacoes.TipoMovimentacao;
 import implementacoes.TipoReceita;
 
 import javax.swing.JComboBox;
@@ -35,14 +36,17 @@ import javax.swing.JTable;
 
 public class Relatorio extends JFrame {
 
+	protected static final Object[][] dados = null;
 	private JPanel contentPane;
 	private JTextField dataInicio;
 	private JTextField dataFim;
 	JLabel lblDataInicio;
 	JLabel lblDataFim;
 	JComboBox tipoMovimentacao;
+	JComboBox tipoEspecifico;
 	private JTable getMatrizDadosGeral;
 	private JTable getMatrizDadosIntervalo;
+	JScrollPane paneMatrizDadosGeral;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -70,7 +74,7 @@ public class Relatorio extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		String[] colunas = { "Tipo", "Valor" };
+		String[] colunas = { "Descricao", "Tipo", "Classificacao", "Valor" };
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -138,9 +142,22 @@ public class Relatorio extends JFrame {
 		JButton btnRelatorio = new JButton("Filtrar");
 		btnRelatorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (((String) tipoMovimentacao.getSelectedItem()).equalsIgnoreCase("Todos")) {
-
-				}
+//				if(tipoMovimentacao.getSelectedItem() == null) System.out.println("\noi");
+//				System.out.println(tipoMovimentacao.getSelectedItem().toString());
+//				if(tipoMovimentacao.getSelectedItem() instanceof TipoMovimentacao)
+//					System.out.println("\noi");
+//				if (!TipoMovimentacao.TODOS.equals(tipoMovimentacao.getSelectedItem())) {
+//					System.out.println("\noi2");
+//					System.out.println(tipoEspecifico.getSelectedItem());
+//					Object[][] dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
+//							((String) tipoEspecifico.getSelectedItem()), _idUsuario);
+//				} else {
+//					Object[][] dados = bd.getRelatorio(tipoMovimentacao.getSelectedItem(), "todos",
+//							_idUsuario);
+//				}
+//				getMatrizDadosGeral = new JTable(dados, colunas);
+//				paneMatrizDadosGeral.setViewportView(getMatrizDadosGeral);
+//				paneMatrizDadosGeral.setVisible(true);
 			}
 		});
 		btnRelatorio.setBounds(390, 100, 134, 30);
@@ -196,9 +213,9 @@ public class Relatorio extends JFrame {
 		chckbxEspecificarIntervaloDe.setBounds(439, 62, 149, 22);
 		contentPane.add(chckbxEspecificarIntervaloDe);
 
+		// Botão utilizado para voltar
 		Button btnVoltar = new Button("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				new Home(_idUsuario, bd).setVisible(true);
@@ -221,7 +238,7 @@ public class Relatorio extends JFrame {
 		lblTipo.setBounds(439, 58, 47, 30);
 		contentPane.add(lblTipo);
 
-		JComboBox tipoEspecifico = new JComboBox();
+		tipoEspecifico = new JComboBox();
 		tipoEspecifico.setVisible(false);
 		tipoEspecifico.setBounds(486, 63, 120, 22);
 		contentPane.add(tipoEspecifico);
@@ -229,12 +246,12 @@ public class Relatorio extends JFrame {
 		JComboBox tipoMovimentacao = new JComboBox();
 		tipoMovimentacao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (((String) tipoMovimentacao.getSelectedItem()).equalsIgnoreCase("Receita")) {
+				if (tipoMovimentacao.getSelectedItem() == TipoMovimentacao.RECEITA) {
 					tipoEspecifico.setVisible(true);
 					lblTipo.setVisible(true);
 					chckbxEspecificarIntervaloDe.setBounds(641, 62, 149, 22);
 					tipoEspecifico.setModel(new DefaultComboBoxModel(TipoReceita.values()));
-				} else if (((String) tipoMovimentacao.getSelectedItem()).equalsIgnoreCase("Despesa")) {
+				} else if (tipoMovimentacao.getSelectedItem() == TipoMovimentacao.DESPESA) {
 					tipoEspecifico.setVisible(true);
 					lblTipo.setVisible(true);
 					chckbxEspecificarIntervaloDe.setBounds(641, 62, 149, 22);
@@ -248,16 +265,16 @@ public class Relatorio extends JFrame {
 			}
 		});
 		tipoMovimentacao.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		tipoMovimentacao.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Despesa", "Receita" }));
+		tipoMovimentacao.setModel(new DefaultComboBoxModel(TipoMovimentacao.values()));
 		tipoMovimentacao.setBounds(294, 62, 120, 22);
 		contentPane.add(tipoMovimentacao);
-		
-		JScrollPane paneMatrizDadosGeral = new JScrollPane();
+
+		paneMatrizDadosGeral = new JScrollPane();
+		paneMatrizDadosGeral.setVisible(false);
 		paneMatrizDadosGeral.setBounds(200, 169, 378, 360);
 		contentPane.add(paneMatrizDadosGeral);
-		getMatrizDadosGeral = new JTable(bd.getMatrizDados("RECEITA", _idUsuario), colunas);
-		getMatrizDadosGeral.setVisible(false);
-		paneMatrizDadosGeral.setViewportView(getMatrizDadosGeral);
+//		getMatrizDadosGeral = new JTable(dados, colunas);
+//		paneMatrizDadosGeral.setViewportView(getMatrizDadosGeral);
 //		getMatrizDadosGeral.setBounds(200, 169, 378, 360);
 //		contentPane.add(getMatrizDadosGeral);
 
@@ -267,8 +284,8 @@ public class Relatorio extends JFrame {
 		contentPane.add(getMatrizDadosIntervalo);
 
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa()));
-		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita()));
+		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa(_idUsuario)));
+		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita(_idUsuario)));
 		JFreeChart chart = ChartFactory.createPieChart("Tipo de movimentação", pieDataset, true, true, true);
 
 		ChartPanel grafico = new ChartPanel(chart);

@@ -156,8 +156,9 @@ public class Home extends JFrame {
 
 		// Primeiro Grafico
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa()));
-		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita()));
+		
+		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa(_idUsuario)));
+		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita(_idUsuario)));
 		JFreeChart chart = ChartFactory.createPieChart("Tipo de movimentação", pieDataset, true, true, true);
 
 		ChartPanel grafico = new ChartPanel(chart);

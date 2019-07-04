@@ -56,7 +56,10 @@ public class BancoDeDados {
 
 	/**
 	 * Verifica a conexão do banco de dados
-	 * @return true para conexão realizada com sucesso <p> false banco de dados não conectado
+	 * 
+	 * @return true para conexão realizada com sucesso
+	 *         <p>
+	 *         false banco de dados não conectado
 	 */
 	public boolean isConectado() throws Exception {
 		if (this.connection != null)
@@ -89,6 +92,7 @@ public class BancoDeDados {
 
 	/**
 	 * Insere um usuário no banco de dados
+	 * 
 	 * @param _usuario Uma instancia da classe Usuario
 	 */
 	public void inserirContato(Usuario _usuario) {
@@ -117,11 +121,16 @@ public class BancoDeDados {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
+
 	/**
 	 * Faz uma autenticação de um usuario
+	 * 
 	 * @param _email E-mail do usuário
 	 * @param _senha Senha do Usuário
-	 * @return true caso o email e senha estejam cadastrados e corretos <p> false para usuário não cadastrado ou alguma informação esteja incorreta
+	 * @return true caso o email e senha estejam cadastrados e corretos
+	 *         <p>
+	 *         false para usuário não cadastrado ou alguma informação esteja
+	 *         incorreta
 	 */
 	public boolean acesso(String _email, String _senha) throws SQLException {
 		String query = "SELECT senha FROM planejamento.Usuario WHERE email='" + _email + "';";
@@ -133,8 +142,10 @@ public class BancoDeDados {
 		}
 		return false;
 	}
+
 	/**
 	 * Insere uma data no banco de dados
+	 * 
 	 * @param _data Uma instancia da classe Data
 	 */
 	public void inserirData(Data _data) throws SQLException {
@@ -150,8 +161,10 @@ public class BancoDeDados {
 
 		this.statement.executeUpdate(query.toString());
 	}
+
 	/**
 	 * Apartir de uma data retorna o Id da mesma
+	 * 
 	 * @param _data Uma instancia da classe Data
 	 * @return o id da data
 	 */
@@ -167,13 +180,15 @@ public class BancoDeDados {
 		}
 		return 0;
 	}
+
 	/**
 	 * Apartir de um email de um Usuário retorna o Id da mesmo
+	 * 
 	 * @param _email E-mail do usuário
 	 * @return o id do usuário
 	 */
 	public int idUsuario(String _email) throws SQLException {
-		String query = "SELECT (idUsuario) from planejamento.Usuario WHERE email='"+_email+"';";
+		String query = "SELECT (idUsuario) from planejamento.Usuario WHERE email='" + _email + "';";
 		this.resultSet = this.statement.executeQuery(query);
 		this.statement = this.connection.createStatement();
 		while (this.resultSet.next()) {
@@ -183,14 +198,17 @@ public class BancoDeDados {
 		}
 		return 0;
 	}
+
 	/**
 	 * Insere uma movimentação do tipo Receita
+	 * 
 	 * @param _movimentacao Uma instancia da classe Receita
 	 * @para _idUsuario O id do usuário que fez a movimentação
 	 */
-	public void inserirMovimentacaoReceita(Receita _movimentacao, int _idUsuario) throws SQLException{
+	public void inserirMovimentacaoReceita(Receita _movimentacao, int _idUsuario) throws SQLException {
 		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO planejamento.Movimentacao (valor,descricao,Usuario_idUsuario,Data_idData,tipo,tipoReceita) VALUES (");
+		query.append(
+				"INSERT INTO planejamento.Movimentacao (valor,descricao,Usuario_idUsuario,Data_idData,tipo,tipoReceita) VALUES (");
 		query.append("'");
 		query.append(_movimentacao.getValor());
 		query.append("','");
@@ -207,14 +225,17 @@ public class BancoDeDados {
 
 		this.statement.executeUpdate(query.toString());
 	}
+
 	/**
 	 * Insere uma movimentação do tipo Despesa
+	 * 
 	 * @param _movimentacao Uma instancia da classe Receita
 	 * @para _idUsuario O id do usuário que fez a movimentação
 	 */
-	public void inserirMovimentacaoDespesa(Despesa _movimentacao, int _idUsuario) throws SQLException{
+	public void inserirMovimentacaoDespesa(Despesa _movimentacao, int _idUsuario) throws SQLException {
 		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO planejamento.Movimentacao (valor,descricao,Usuario_idUsuario,Data_idData,tipo,tipoDespesa) VALUES (");
+		query.append(
+				"INSERT INTO planejamento.Movimentacao (valor,descricao,Usuario_idUsuario,Data_idData,tipo,tipoDespesa) VALUES (");
 		query.append("'");
 		query.append(_movimentacao.getValor());
 		query.append("','");
@@ -234,51 +255,53 @@ public class BancoDeDados {
 
 	/**
 	 * Insere uma movimentação do tipo receita
+	 * 
 	 * @param _movimentacao Uma instancia da classe Receita
 	 * @para _idUsuario O id do usuário que fez a movimentação
 	 */
-	public String listarMovimentacoes() {
-		try {
-			String query = "SELECT * FROM planejamento.Movimentacao ORDER BY data";
-			this.resultSet = this.statement.executeQuery(query);
-			this.statement = this.connection.createStatement();
-			StringBuilder resultset = new StringBuilder();
-			while (this.resultSet.next()) {
-				
-				resultset.append("\nID: ");
-				resultset.append(this.resultSet.getString("id"));
-				resultset.append(" - Data: ");
-				resultset.append(this.resultSet.getString("data"));
-				
-			}
-			return  resultset.toString();
-		} catch (Exception e) {
-			System.out.println("Erro: " + e.getMessage());
-			return null;
-		}
-	}
+//	public String listarMovimentacoes(int _idUsuario) {
+//		try {
+//			String query = "SELECT * FROM planejamento.Movimentacao ORDER BY data WHERE Usuario_idUsuario="+_idUsuario+";";
+//			this.resultSet = this.statement.executeQuery(query);
+//			this.statement = this.connection.createStatement();
+//			StringBuilder resultset = new StringBuilder();
+//			while (this.resultSet.next()) {
+//
+//				resultset.append("\nID: ");
+//				resultset.append(this.resultSet.getString("id"));
+//				resultset.append(" - Data: ");
+//				resultset.append(this.resultSet.getString("data"));
+//
+//			}
+//			return resultset.toString();
+//		} catch (Exception e) {
+//			System.out.println("Erro: " + e.getMessage());
+//			return null;
+//		}
+//	}
+
 	/**
 	 * Calcula o porcentagem das despesas
-	 * @return a pordecetagem das depesas 
-	  */
-	public double getPorcentagemDespesa() {
+	 * 
+	 * @return a pordecetagem das depesas
+	 */
+	public double getPorcentagemDespesa(int _idUsuario) {
 		try {
-			String query = "SELECT * FROM planejamento.Movimentacao";
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUsuario="+_idUsuario+";";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			double porcentagem = 0.0;
 			double receita = 0.0, despesa = 0.0;
 			while (this.resultSet.next()) {
-				StringBuilder resultset = new StringBuilder();
-				if(this.resultSet.getString("tipo").equalsIgnoreCase("receita")) {
+				if (this.resultSet.getString("tipo").equalsIgnoreCase("receita")) {
 					receita += Double.parseDouble(this.resultSet.getString("valor"));
-				}else {
+				} else {
 					despesa += Double.parseDouble(this.resultSet.getString("valor"));
 				}
-				if((receita+despesa) == 0.0) {
+				if ((receita + despesa) == 0.0) {
 					return 0.0;
-				}else {
-					porcentagem = despesa*100/(receita+despesa);
+				} else {
+					porcentagem = despesa * 100 / (receita + despesa);
 				}
 			}
 			return porcentagem;
@@ -286,29 +309,31 @@ public class BancoDeDados {
 			System.out.println("Erro: " + e.getMessage());
 			return 0.0;
 		}
-		
+
 	}
+
 	/**
 	 * Calcula o porcentagem das receita
-	 * @return a pordecetagem das receita 
-	  */	
-	public double getPorcentagemReceita() {
+	 * 
+	 * @return a pordecetagem das receita
+	 */
+	public double getPorcentagemReceita(int _idUsuario) {
 		try {
-			String query = "SELECT * FROM planejamento.Movimentacao";
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUsuario="+_idUsuario+";";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			double porcentagem = 0.0;
 			double receita = 0.0, despesa = 0.0;
 			while (this.resultSet.next()) {
-				if(this.resultSet.getString("tipo").equalsIgnoreCase("receita")) {
+				if (this.resultSet.getString("tipo").equalsIgnoreCase("receita")) {
 					receita += Double.parseDouble(this.resultSet.getString("valor"));
-				}else {
+				} else {
 					despesa += Double.parseDouble(this.resultSet.getString("valor"));
 				}
-				if((receita+despesa) == 0.0) {
+				if ((receita + despesa) == 0.0) {
 					return 0;
-				}else {
-					porcentagem = receita*100/(receita+despesa);
+				} else {
+					porcentagem = receita * 100 / (receita + despesa);
 				}
 			}
 			return porcentagem;
@@ -316,48 +341,50 @@ public class BancoDeDados {
 			System.out.println("Erro: " + e.getMessage());
 			return 0;
 		}
-		
+
 	}
+
 	/**
 	 * Calcula o porcentagem do tipo
+	 * 
 	 * @return a pordecetagem do tipo
-	  */
-	public double getPorcentagemTipo(String _tipoGeral, String _tipoEspecifico) {
+	 */
+	public double getPorcentagemTipo(String _tipoGeral, String _tipoEspecifico, int _idUsuario) {
 		try {
-			String query = "SELECT * FROM planejamento.Movimentacao";
+			String query = "SELECT * FROM planejamento.Movimentacao  WHERE Usuario_idUsuario="+_idUsuario+";";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			double porcentagem = 0.0;
 			double especifico = 0.0, total = 0.0;
 			while (this.resultSet.next()) {
-				if(_tipoGeral.equalsIgnoreCase("RECEITA")) {
-					if(this.resultSet.getString("tipo").equalsIgnoreCase(_tipoGeral)) {
-						if(this.resultSet.getString("tipoReceita").equalsIgnoreCase(_tipoEspecifico)) {
+				if (_tipoGeral.equalsIgnoreCase("RECEITA")) {
+					if (this.resultSet.getString("tipo").equalsIgnoreCase(_tipoGeral)) {
+						if (this.resultSet.getString("tipoReceita").equalsIgnoreCase(_tipoEspecifico)) {
 							especifico += Double.parseDouble(this.resultSet.getString("valor"));
 							total += Double.parseDouble(this.resultSet.getString("valor"));
-						}else {
+						} else {
 							total += Double.parseDouble(this.resultSet.getString("valor"));
 						}
-					}else {
+					} else {
 						total += Double.parseDouble(this.resultSet.getString("valor"));
 					}
-				}else {
-					if(this.resultSet.getString("tipo").equalsIgnoreCase(_tipoGeral)) {
-						if(this.resultSet.getString("tipoDespesa").equalsIgnoreCase(_tipoEspecifico)) {
+				} else {
+					if (this.resultSet.getString("tipo").equalsIgnoreCase(_tipoGeral)) {
+						if (this.resultSet.getString("tipoDespesa").equalsIgnoreCase(_tipoEspecifico)) {
 							especifico += Double.parseDouble(this.resultSet.getString("valor"));
 							total += Double.parseDouble(this.resultSet.getString("valor"));
-						}else {
+						} else {
 							total += Double.parseDouble(this.resultSet.getString("valor"));
 						}
-					}else {
+					} else {
 						total += Double.parseDouble(this.resultSet.getString("valor"));
 					}
 				}
 
-				if(total == 0) {
+				if (total == 0) {
 					return 0;
-				}else {
-					porcentagem = especifico*100/total;
+				} else {
+					porcentagem = especifico * 100 / total;
 				}
 			}
 			return porcentagem;
@@ -366,29 +393,31 @@ public class BancoDeDados {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Geara uma matriz com as receitas e despesas
-	 * @return uma matriz com as receitas e despesas 
-	  */
-	public Object[][] getMatrizDados(String _tipo, int _idUsuario){
+	 * 
+	 * @return uma matriz com as receitas e despesas
+	 */
+	public Object[][] getMatrizDados(String _tipo, int _idUsuario) {
 		int i = 0;
 		try {
-			String query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = "+_idUsuario+" AND tipo='"+_tipo+"');";
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = " + _idUsuario
+					+ " AND tipo='" + _tipo + "');";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			while (this.resultSet.next()) {
 				i++;
 			}
-			Object[][]  dados = new Object[i][2];
-			i=0;
+			Object[][] dados = new Object[i][2];
+			i = 0;
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			while (this.resultSet.next()) {
-				//Avaliando o tipo passado como parâmetro para pegar o valor do tipo específico
-				if(_tipo.equalsIgnoreCase("RECEITA")) {
+				// Avaliando o tipo passado como parâmetro para pegar o valor do tipo específico
+				if (_tipo.equalsIgnoreCase("RECEITA")) {
 					dados[i][0] = this.resultSet.getString("tipoReceita");
-				}else {
+				} else {
 					dados[i][0] = this.resultSet.getString("tipoDespesa");
 				}
 				dados[i][1] = this.resultSet.getString("valor");
@@ -400,21 +429,22 @@ public class BancoDeDados {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Calcula o valor das receitas
+	 * 
 	 * @return O valor das receitas
-	  */
+	 */
 	public double getValorTotal(int _idUsuario) {
 		try {
 			double total = 0.0;
-			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUSuario = "+_idUsuario+";";
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUSuario = " + _idUsuario + ";";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			while (this.resultSet.next()) {
-				if(this.resultSet.getString("tipo").equalsIgnoreCase("RECEITA")) {
+				if (this.resultSet.getString("tipo").equalsIgnoreCase("RECEITA")) {
 					total += Double.parseDouble(this.resultSet.getString("valor"));
-				}else {
+				} else {
 					total -= Double.parseDouble(this.resultSet.getString("valor"));
 				}
 			}
@@ -424,35 +454,90 @@ public class BancoDeDados {
 			return 0.0;
 		}
 	}
+
 	/**
-	 * Geara uma matriz com as receitas e despesas <p> com Descrição, tipo, valor, editar, excluir 
-	 * @return uma matriz com as receitas e despesas 
-	  */
+	 * Geara uma matriz com as receitas e despesas
+	 * <p>
+	 * com Descrição, tipo, valor, editar, excluir
+	 * 
+	 * @return uma matriz com as receitas e despesas
+	 */
 	public Object[][] getHistorico(int _idUsuario) {
 		int i = 0;
 		try {
-			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUSuario = "+_idUsuario+";";
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUSuario = " + _idUsuario + ";";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			while (this.resultSet.next()) {
 				i++;
 			}
-			Object[][]  dados = new Object[i][6];
-			i=0;
+			Object[][] dados = new Object[i][6];
+			i = 0;
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			while (this.resultSet.next()) {
 				dados[i][0] = this.resultSet.getString("descricao");
 				dados[i][1] = this.resultSet.getString("tipo");
-				//Avaliando o tipo passado como parâmetro para pegar o valor do tipo específico
-				if(this.resultSet.getString("tipo").equalsIgnoreCase("RECEITA")) {
+				// Avaliando o tipo passado como parâmetro para pegar o valor do tipo específico
+				if (this.resultSet.getString("tipo").equalsIgnoreCase("RECEITA")) {
 					dados[i][2] = this.resultSet.getString("tipoReceita");
-				}else {
+				} else {
 					dados[i][2] = this.resultSet.getString("tipoDespesa");
 				}
 				dados[i][3] = this.resultSet.getString("valor");
 				dados[i][4] = "Editar";
 				dados[i][5] = "Excluir";
+				i++;
+			}
+			return dados;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+			return null;
+		}
+	}
+
+	public Object[][] getRelatorio(TipoMovimentacao _tipoMovimentacao, String _tipoEspecifico, int _idUsuario) {
+		int i = 0;
+		String query;
+		try {
+			if (_tipoMovimentacao == TipoMovimentacao.TODOS) {
+				query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUSuario = " + _idUsuario + ";";
+			} else if (_tipoMovimentacao == TipoMovimentacao.RECEITA) {
+				if (_tipoEspecifico.equalsIgnoreCase("todos"))
+					query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = " + _idUsuario
+							+ " AND tipo='" + _tipoMovimentacao + "');";
+				else
+					query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = " + _idUsuario
+					+ " AND tipo='" + _tipoMovimentacao + "' AND tipoReceita='" + _tipoEspecifico.toUpperCase()
+					+ "');";
+			} else {
+				if (_tipoEspecifico.equalsIgnoreCase("todos"))
+					query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = " + _idUsuario
+							+ " AND tipo='" + _tipoMovimentacao + "');";
+				else
+					query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = " + _idUsuario
+					+ " AND tipo='" + _tipoMovimentacao + "' AND tipoDespesa='" + _tipoEspecifico.toUpperCase()
+					+ "');";
+			}
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			while (this.resultSet.next()) {
+				i++;
+			}
+			Object[][] dados = new Object[i][4];
+			i = 0;
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			while (this.resultSet.next()) {
+				dados[i][0] = this.resultSet.getString("descricao");
+				dados[i][1] = this.resultSet.getString("tipo");
+				// Avaliando o tipo passado como parâmetro para pegar o valor do tipo específico
+				if (this.resultSet.getString("tipo").equalsIgnoreCase(_tipoEspecifico)) {
+					dados[i][2] = this.resultSet.getString("tipoReceita");
+				} else {
+					dados[i][2] = this.resultSet.getString("tipoDespesa");
+				}
+				dados[i][3] = this.resultSet.getString("valor");
 				i++;
 			}
 			return dados;
