@@ -47,6 +47,8 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Scrollbar;
 import javax.swing.JDesktopPane;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class NovaMovimentacao extends JFrame {
 
@@ -54,6 +56,7 @@ public class NovaMovimentacao extends JFrame {
 	private JTextField descricao;
 	private JTextField valor;
 	private JTextField data;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -181,14 +184,24 @@ public class NovaMovimentacao extends JFrame {
 		lblTpo.setBounds(436, 261, 116, 16);
 		Movimentacao.add(lblTpo);
 
-		JCheckBox chckb_Receita = new JCheckBox("Receita");
-		chckb_Receita.setToolTipText("");
-		chckb_Receita.setBounds(215, 290, 81, 25);
-		Movimentacao.add(chckb_Receita);
-
-		JCheckBox chckb_Despesa = new JCheckBox("Despesa");
-		chckb_Despesa.setBounds(300, 290, 87, 25);
-		Movimentacao.add(chckb_Despesa);
+		JRadioButton rdbtnReceita = new JRadioButton("Receita");
+		buttonGroup.add(rdbtnReceita);
+		rdbtnReceita.setBounds(214, 290, 81, 25);
+		Movimentacao.add(rdbtnReceita);
+		
+		JRadioButton rdbtnDespesa = new JRadioButton("Despesa");
+		buttonGroup.add(rdbtnDespesa);
+		rdbtnDespesa.setBounds(300, 290, 87, 25);
+		Movimentacao.add(rdbtnDespesa);
+		
+//		JCheckBox chckb_Receita = new JCheckBox("Receita");
+//		chckb_Receita.setToolTipText("");
+//		chckb_Receita.setBounds(215, 290, 81, 25);
+//		Movimentacao.add(chckb_Receita);
+//
+//		JCheckBox chckb_Despesa = new JCheckBox("Despesa");
+//		chckb_Despesa.setBounds(300, 290, 87, 25);
+//		Movimentacao.add(chckb_Despesa);
 
 		JLabel lblCategoria = new JLabel("Categoria:");
 		lblCategoria.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -202,10 +215,10 @@ public class NovaMovimentacao extends JFrame {
 		// o que vai aparecer no comboBox
 
 		// caso seja selecionado receita
-		chckb_Receita.addActionListener(new ActionListener() {
+		rdbtnReceita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (chckb_Despesa.isSelected() == false) {
-					if (chckb_Receita.isSelected() == true) {
+				if (rdbtnDespesa.isSelected() == false) {
+					if (rdbtnReceita.isSelected() == true) {
 						tipo.setModel(new DefaultComboBoxModel(new String[] { "SALARIO", "OUTROS" }));
 					} else {
 						tipo.setModel(new DefaultComboBoxModel(new String[] { "" }));
@@ -213,15 +226,15 @@ public class NovaMovimentacao extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(contentPane, "Você já seleconou DESPESA", "Erro",
 							JOptionPane.ERROR_MESSAGE);
-					chckb_Receita.setSelected(false);
+					rdbtnReceita.setSelected(false);
 				}
 			}
 		});
 		// caso seja selecionado DESPESA
-		chckb_Despesa.addActionListener(new ActionListener() {
+		rdbtnDespesa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (chckb_Receita.isSelected() == false) {
-					if (chckb_Despesa.isSelected() == true) {
+				if (rdbtnReceita.isSelected() == false) {
+					if (rdbtnDespesa.isSelected() == true) {
 						tipo.setModel(new DefaultComboBoxModel(new String[] { "ACADEMIA", "AGUA", "ALUGUEL", "CLUBE",
 								"INTERNET", "TELEFONE", "LUZ", "SUPERMERCADO", "OUTROS" }));
 					} else {
@@ -230,7 +243,7 @@ public class NovaMovimentacao extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(contentPane, "Você já seleconou RECEITA", "Erro",
 							JOptionPane.ERROR_MESSAGE);
-					chckb_Despesa.setSelected(false);
+					rdbtnDespesa.setSelected(false);
 				}
 
 			}
@@ -256,7 +269,7 @@ public class NovaMovimentacao extends JFrame {
 				try {
 //					bd.conectar();
 					if (bd.isConectado()) {
-						if (chckb_Receita.isSelected()) {
+						if (rdbtnReceita.isSelected()) {
 							// ACADEMIA", "AGUA", "ALUGUEL", "CLUBE
 							switch (((String) tipo.getSelectedItem()).toLowerCase()) {
 							case "salario":
@@ -348,6 +361,5 @@ public class NovaMovimentacao extends JFrame {
 		btnVoltar.setBackground(Color.WHITE);
 		btnVoltar.setBounds(578, 13, 57, 30);
 		Movimentacao.add(btnVoltar);
-
 	}
 }

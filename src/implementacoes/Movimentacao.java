@@ -15,9 +15,10 @@ public class Movimentacao {
 	
 	/**
 	 * Construtor completo para criacao de uma Movimentacao.
-	 * @param _data
-	 * @param _descricao
-	 * @param _valor
+	 * 
+	 * @param _data A data da Movimentacao
+	 * @param _descricao A descricao da Movimentacao
+	 * @param _valor O valor da Movimentacao
 	 */
 	public Movimentacao(Data _data, String _descricao, Double _valor) {
 		this.setData(_data);
@@ -26,37 +27,43 @@ public class Movimentacao {
 	}
 
 	/**
-	 * @return A data da movimentacao
+	 * Metodo para retornar a data da Movimentacao
+	 * @return A data da Movimentacao
 	 */
 	public Data getData() {
 		return this.data;
 	}
 	/**
-	 * @param _data 
+	 * Metodo para setar a data da Movimentacao
+	 * @param _data data da Movimentacao
 	 */
 	public void setData(Data _data) {
 		this.data = _data;
 	}
 	/**
-	 * @return the descricao
+	 * Metodo para retornar a descricao da Movimentacao
+	 * @return A descricao da Movimentacao
 	 */
 	public String getDescricao() {
 		return this.descricao;
 	}
 	/**
-	 * @param _descricao the descricao to set
+	 * Metodo para setar a descricao da Movimentacao
+	 * @param _descricao descricao da Movimentacao
 	 */
 	public void setDescricao(String _descricao) {
 		this.descricao = _descricao;
 	}
 	/**
-	 * @return the valor
+	 * Metodo para retornar o valor da Movimentacao
+	 * @return O valor da Movimentacao
 	 */
 	public Double getValor() {
 		return this.valor;
 	}
 	/**
-	 * @param _valor the valor to set
+	 * Metodo para setar o valor da Movimentacao
+	 * @param _valor O valor da Movimentacao
 	 */
 	public void setValor(Double _valor) {
 		this.valor = _valor;
