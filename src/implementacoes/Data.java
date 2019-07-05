@@ -260,6 +260,25 @@ public class Data {
 			return false;
 		}
 	}
+	
+	/**
+	 * /**
+	 * Metodo para verificar se o data passada como parametro esta
+	 * em um intervalo valido.
+	 * @param _data
+	 * @return true se a Data foi valida, caso contrario, false.
+	 */
+	public static boolean isDataValida(String _data) {
+		try {
+			int firstindex = _data.indexOf("/");
+			int secindex = _data.indexOf("/", firstindex + 1);
+			return Data.isDataValida(Integer.parseInt(_data.substring(0, firstindex)),
+				Integer.parseInt(_data.substring((firstindex + 1), secindex)),
+				Integer.parseInt(_data.substring((secindex + 1), (secindex + 5))));
+		}catch(Exception e) {
+			return false;
+		}
+	}
 
 	/**
 	 * /**
@@ -349,6 +368,17 @@ public class Data {
 	public int compareTo(Data _data) {
 		return Data.compareTo(this.getDia(), this.getMes(), this.getAno(), _data.getDia(), _data.getMes(),
 				_data.getAno());
+	}
+	public static int compareTo(String _data1, String _data2) {
+			int firstindex1 = _data1.indexOf("/");
+			int secindex1 = _data1.indexOf("/", firstindex1 + 1);
+			int firstindex2 = _data2.indexOf("/");
+			int secindex2 = _data2.indexOf("/", firstindex2 + 1);
+			return Data.compareTo(Integer.parseInt(_data1.substring(0, firstindex1)),
+				Integer.parseInt(_data1.substring((firstindex1 + 1), secindex1)),
+				Integer.parseInt(_data1.substring((secindex1 + 1), (secindex1 + 5))),Integer.parseInt(_data2.substring(0, firstindex2)),
+				Integer.parseInt(_data2.substring((firstindex2 + 1), secindex2)),
+				Integer.parseInt(_data2.substring((secindex2 + 1), (secindex2 + 5))));
 	}
 
 	/**

@@ -60,6 +60,18 @@ public class Home extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Login frame = new Login();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
@@ -118,7 +130,7 @@ public class Home extends JFrame {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new Relatorio(_idUsuario,bd).setVisible(true);
+				new Relatorio(_idUsuario, bd).setVisible(true);
 			}
 		});
 
@@ -144,8 +156,9 @@ public class Home extends JFrame {
 
 		// Primeiro Grafico
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa()));
-		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita()));
+		
+		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa(_idUsuario)));
+		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita(_idUsuario)));
 		JFreeChart chart = ChartFactory.createPieChart("Tipo de movimentação", pieDataset, true, true, true);
 
 		ChartPanel grafico = new ChartPanel(chart);
@@ -157,7 +170,7 @@ public class Home extends JFrame {
 		grafico.setLayout(null);
 
 		saldo = new JTextField();
-		saldo.setText("R$ "+bd.getValorTotal(_idUsuario));
+		saldo.setText("R$ " + bd.getValorTotal(_idUsuario));
 		saldo.setBounds(653, 171, 116, 22);
 		contentPane.add(saldo);
 		saldo.setColumns(10);
@@ -181,13 +194,13 @@ public class Home extends JFrame {
 		paneTableDespesa.setLocation(535, 318);
 		paneTableDespesa.setSize(266, 230);
 		contentPane.add(paneTableDespesa);
-		
+
 		JLabel lblListaDeMovimentacoes = new JLabel("Lista de Receitas do M\u00EAs");
 		lblListaDeMovimentacoes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListaDeMovimentacoes.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblListaDeMovimentacoes.setBounds(216, 274, 266, 31);
 		contentPane.add(lblListaDeMovimentacoes);
-		
+
 		JLabel lblListaDeMovimentacoes_1 = new JLabel("Lista de Despesas do M\u00EAs");
 		lblListaDeMovimentacoes_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListaDeMovimentacoes_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
