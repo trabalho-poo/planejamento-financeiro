@@ -532,7 +532,7 @@ public class BancoDeDados {
 				dados[i][0] = this.resultSet.getString("descricao");
 				dados[i][1] = this.resultSet.getString("tipo");
 				// Avaliando o tipo passado como parâmetro para pegar o valor do tipo específico
-				if (this.resultSet.getString("tipo").equalsIgnoreCase(_tipoEspecifico)) {
+				if (this.resultSet.getString("tipo").equalsIgnoreCase("Receita")) {
 					dados[i][2] = this.resultSet.getString("tipoReceita");
 				} else {
 					dados[i][2] = this.resultSet.getString("tipoDespesa");

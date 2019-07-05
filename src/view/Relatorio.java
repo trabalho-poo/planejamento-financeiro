@@ -12,6 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -22,6 +23,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
 import implementacoes.BancoDeDados;
+import implementacoes.Data;
 import implementacoes.Sexo;
 import implementacoes.TipoDespesa;
 import implementacoes.TipoMovimentacao;
@@ -36,7 +38,6 @@ import javax.swing.JTable;
 
 public class Relatorio extends JFrame {
 
-	protected static final Object[][] dados = null;
 	private JPanel contentPane;
 	private JTextField dataInicio;
 	private JTextField dataFim;
@@ -47,6 +48,8 @@ public class Relatorio extends JFrame {
 	private JTable getMatrizDadosGeral;
 	private JTable getMatrizDadosIntervalo;
 	JScrollPane paneMatrizDadosGeral;
+	Object[][] dados;
+	JCheckBox chckbxEspecificarIntervaloDe;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -142,28 +145,47 @@ public class Relatorio extends JFrame {
 		JButton btnRelatorio = new JButton("Filtrar");
 		btnRelatorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				if(tipoMovimentacao.getSelectedItem() == null) System.out.println("\noi");
-//				System.out.println(tipoMovimentacao.getSelectedItem().toString());
-//				if(tipoMovimentacao.getSelectedItem() instanceof TipoMovimentacao)
-//					System.out.println("\noi");
-//				if (!TipoMovimentacao.TODOS.equals(tipoMovimentacao.getSelectedItem())) {
-//					System.out.println("\noi2");
-//					System.out.println(tipoEspecifico.getSelectedItem());
-//					Object[][] dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
-//							((String) tipoEspecifico.getSelectedItem()), _idUsuario);
-//				} else {
-//					Object[][] dados = bd.getRelatorio(tipoMovimentacao.getSelectedItem(), "todos",
-//							_idUsuario);
-//				}
-//				getMatrizDadosGeral = new JTable(dados, colunas);
-//				paneMatrizDadosGeral.setViewportView(getMatrizDadosGeral);
-//				paneMatrizDadosGeral.setVisible(true);
+				if (chckbxEspecificarIntervaloDe.isSelected()) {
+					if (dataInicio.getText().equals("") || dataFim.getText().equals("")) {
+						JOptionPane.showMessageDialog(contentPane,
+								"Alguma data nao foi inserida corretamente. Certifique-se de preencher todos os campos.",
+								"Erro ao gerar relatório", JOptionPane.ERROR_MESSAGE);
+					} else if (!Data.isDataValida(dataInicio.getText()) || !Data.isDataValida(dataFim.getText())) {
+						JOptionPane.showMessageDialog(contentPane,
+								"Alguma data nao foi inserida corretamente. Certifique-se de inserir a data no formato: DD/MM/YYYY.",
+								"Erro ao gerar relatório", JOptionPane.ERROR_MESSAGE);
+					} else if(Data.compareTo(dataInicio.getText(), dataFim.getText()) == -1){
+						JOptionPane.showMessageDialog(contentPane,
+								"Certifique-se de colocar a data de início como sendo menor que a data de fim do intervalo.",
+								"Erro ao gerar relatório", JOptionPane.ERROR_MESSAGE);
+					}else {
+						//FAZER METODO PARA DATAS
+						if (!TipoMovimentacao.TODOS.equals(tipoMovimentacao.getSelectedItem())) {
+							dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
+									tipoEspecifico.getSelectedItem().toString(), _idUsuario);
+						} else {
+							dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(), "todos",
+									_idUsuario);
+						}
+					}
+				} else {
+					if (!TipoMovimentacao.TODOS.equals(tipoMovimentacao.getSelectedItem())) {
+						dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
+								tipoEspecifico.getSelectedItem().toString(), _idUsuario);
+					} else {
+						dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(), "todos",
+								_idUsuario);
+					}
+				}
+				getMatrizDadosGeral = new JTable(dados, colunas);
+				paneMatrizDadosGeral.setViewportView(getMatrizDadosGeral);
+				paneMatrizDadosGeral.setVisible(true);
 			}
 		});
 		btnRelatorio.setBounds(390, 100, 134, 30);
 		contentPane.add(btnRelatorio);
 
-		JCheckBox chckbxEspecificarIntervaloDe = new JCheckBox("Intervalo de datas");
+		chckbxEspecificarIntervaloDe = new JCheckBox("Intervalo de datas");
 		chckbxEspecificarIntervaloDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (chckbxEspecificarIntervaloDe.isSelected()) {
@@ -243,19 +265,20 @@ public class Relatorio extends JFrame {
 		tipoEspecifico.setBounds(486, 63, 120, 22);
 		contentPane.add(tipoEspecifico);
 
-		JComboBox tipoMovimentacao = new JComboBox();
+		tipoMovimentacao = new JComboBox();
 		tipoMovimentacao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (tipoMovimentacao.getSelectedItem() == TipoMovimentacao.RECEITA) {
 					tipoEspecifico.setVisible(true);
 					lblTipo.setVisible(true);
 					chckbxEspecificarIntervaloDe.setBounds(641, 62, 149, 22);
-					tipoEspecifico.setModel(new DefaultComboBoxModel(TipoReceita.values()));
+					tipoEspecifico.setModel(new DefaultComboBoxModel(new String[] { "TODOS", "SALARIO", "OUTROS" }));
 				} else if (tipoMovimentacao.getSelectedItem() == TipoMovimentacao.DESPESA) {
 					tipoEspecifico.setVisible(true);
 					lblTipo.setVisible(true);
 					chckbxEspecificarIntervaloDe.setBounds(641, 62, 149, 22);
-					tipoEspecifico.setModel(new DefaultComboBoxModel(TipoDespesa.values()));
+					tipoEspecifico.setModel(new DefaultComboBoxModel(new String[] { "TODOS", "ALUGUEL", "TELEFONE",
+							"INTERNET", "ACADEMIA", "CLUBE", "SUPERMERCADO", "LUZ", "AGUA", "OUTROS" }));
 				} else {
 					tipoEspecifico.setVisible(false);
 					lblTipo.setVisible(false);
