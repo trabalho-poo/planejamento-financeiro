@@ -112,7 +112,7 @@ public class Login extends JFrame {
 					if(bd.isConectado()) {
 						if( bd.acesso(email.getText(), senha.getText()) )
 						{
-							JOptionPane.showMessageDialog(contentPane, "Seja Bem vindo!", "", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(contentPane, "Seja bem vindo!", "", JOptionPane.INFORMATION_MESSAGE);
 							setVisible(false);
 							//new Home().setVisible(true);
 							new Home(bd.idUsuario(email.getText()),bd).setVisible(true); 

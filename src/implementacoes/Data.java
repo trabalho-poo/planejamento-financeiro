@@ -1,8 +1,7 @@
 package implementacoes;
 
 /**
- * Classe para a geracao de Data que sera
- * utilizada ao longo do programa.
+ * Classe para a geracao de Data que sera utilizada ao longo do programa.
  * 
  * @author Grupo (Cleisson diLauro, Franco Flores, Guilherme Mattos, Luciano
  *         Alves, Natalia Lopes)
@@ -17,8 +16,7 @@ public class Data {
 	private int ano;
 
 	/**
-	 * Construtor com data vazia.
-	 * Atribui o data default 01/01/1900.
+	 * Construtor com data vazia. Atribui o data default 01/01/1900.
 	 */
 	public Data() {
 		this.setDia(1);
@@ -27,8 +25,7 @@ public class Data {
 	}
 
 	/**
-	 * Construtor somente com o mes e ano.
-	 * Atribui o dia default 1.
+	 * Construtor somente com o mes e ano. Atribui o dia default 1.
 	 * 
 	 * @param _mes mes da data como um inteiro
 	 * @param _ano ano da data como um inteiro
@@ -39,6 +36,7 @@ public class Data {
 
 	/**
 	 * Construtor com Data completa.
+	 * 
 	 * @param _dia dia da data como um inteiro
 	 * @param _mes mes da data como um inteiro
 	 * @param _ano ano da data como um inteiro
@@ -48,8 +46,7 @@ public class Data {
 	}
 
 	/**
-	 * Construtor com mes em string,
-	 * dia e ano em Inteiro.
+	 * Construtor com mes em string, dia e ano em Inteiro.
 	 * 
 	 * @param _dia dia da data como um inteiro
 	 * @param _mes mes da data como uma String
@@ -88,8 +85,7 @@ public class Data {
 	}
 
 	/**
-	 * Pega a data em String para atribuir aos campos
-	 * dia, mes e ano.
+	 * Pega a data em String para atribuir aos campos dia, mes e ano.
 	 * 
 	 * @param data data como uma String.
 	 * @throws Exception Caso a data nao esteja em formato valido.
@@ -135,8 +131,7 @@ public class Data {
 	}
 
 	/**
-	 * Pega a String _mes e atribui o inteiro correspondente
-	 * ao campo mes da Data.
+	 * Pega a String _mes e atribui o inteiro correspondente ao campo mes da Data.
 	 * 
 	 * @param _mes mes da data como uma String.
 	 */
@@ -178,6 +173,7 @@ public class Data {
 
 	/**
 	 * Metodo para retornar o dia do objeto.
+	 * 
 	 * @return dia dia do objeto como um inteiro.
 	 */
 	public int getDia() {
@@ -186,6 +182,7 @@ public class Data {
 
 	/**
 	 * Metodo para atribuir o dia para Data.
+	 * 
 	 * @param _dia da Data como um inteiro.
 	 */
 	public void setDia(int _dia) {
@@ -194,6 +191,7 @@ public class Data {
 
 	/**
 	 * Metodo para retornar o mes do objeto.
+	 * 
 	 * @return mes da data como um inteiro.
 	 */
 	public int getMes() {
@@ -202,6 +200,7 @@ public class Data {
 
 	/**
 	 * Metodo para pegar o mes da data.
+	 * 
 	 * @param _mes mes da data como um inteiro.
 	 */
 	public void setMes(int _mes) {
@@ -210,6 +209,7 @@ public class Data {
 
 	/**
 	 * Metodo para retornar o dia do objeto.
+	 * 
 	 * @return dia
 	 */
 	public int getAno() {
@@ -218,6 +218,7 @@ public class Data {
 
 	/**
 	 * Metodo para pegar o ano da data.
+	 * 
 	 * @param _ano ano da data como um inteiro.
 	 */
 	public void setAno(int _ano) {
@@ -241,6 +242,7 @@ public class Data {
 
 	/**
 	 * Metodo para verificar se o ano passado como parametro e Bissextp
+	 * 
 	 * @param _ano
 	 * @return true se for bisexto, caso contrario, false.
 	 */
@@ -255,11 +257,11 @@ public class Data {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * /**
-	 * Metodo para verificar se o data passada como parametro esta
-	 * em um intervalo valido.
+	 * /** Metodo para verificar se o data passada como parametro esta em um
+	 * intervalo valido.
+	 * 
 	 * @param _data
 	 * @return true se a Data foi valida, caso contrario, false.
 	 */
@@ -268,17 +270,17 @@ public class Data {
 			int firstindex = _data.indexOf("/");
 			int secindex = _data.indexOf("/", firstindex + 1);
 			return Data.isDataValida(Integer.parseInt(_data.substring(0, firstindex)),
-				Integer.parseInt(_data.substring((firstindex + 1), secindex)),
-				Integer.parseInt(_data.substring((secindex + 1), (secindex + 5))));
-		}catch(Exception e) {
+					Integer.parseInt(_data.substring((firstindex + 1), secindex)),
+					Integer.parseInt(_data.substring((secindex + 1), (secindex + 5))));
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	/**
-	 * /**
-	 * Metodo para verificar se o data passada como parametro esta
-	 * em um intervalo valido.
+	 * /** Metodo para verificar se o data passada como parametro esta em um
+	 * intervalo valido.
+	 * 
 	 * @param _dia
 	 * @param _mes
 	 * @param _ano
@@ -313,24 +315,15 @@ public class Data {
 	 * Método que incrementa um dia no objeto de chamada.
 	 */
 	public void incrementa() {
-		try 
-		{
+		try {
 			this.setData(getDia() + 1, getMes(), getAno());
-		} 
-		catch (Exception dia) 
-		{
-			try 
-			{
+		} catch (Exception dia) {
+			try {
 				this.setData(1, getMes() + 1, getAno());
-			} 
-			catch (Exception mes) 
-			{
-				try 
-				{
+			} catch (Exception mes) {
+				try {
 					this.setData(1, 1, getAno() + 1);
-				} 
-				catch (Exception ano) 
-				{
+				} catch (Exception ano) {
 					new Exception("Ocorreu um erro ao incrementar essa Data!");
 				}
 			}
@@ -338,8 +331,8 @@ public class Data {
 	}
 
 	/**
-	 * Método que chama o metodo sobrecarregado incrementa
-	 * com a quantidade de iterações passada como parametro.
+	 * Método que chama o metodo sobrecarregado incrementa com a quantidade de
+	 * iterações passada como parametro.
 	 * 
 	 * @param dias quantidade de dias a ser incrementado.
 	 * @return objeto de chamada com dias incrementados.
@@ -357,59 +350,72 @@ public class Data {
 	/**
 	 * Método que chama o algoritimo de comparacao de Data.
 	 * 
-	 * @return inteiro retornado no metodo sobrecarregado compareTo 
+	 * @return inteiro retornado no metodo sobrecarregado compareTo
 	 */
 	public int compareTo(Data _data) {
 		return Data.compareTo(this.getDia(), this.getMes(), this.getAno(), _data.getDia(), _data.getMes(),
 				_data.getAno());
 	}
+
+	/**
+	 * 
+	 * * Método que recebe duas datas no formato string e chama o algoritimo de
+	 * comparacao de Data que recebe a data em inteiros.
+	 * 
+	 * @param _data1
+	 * @param _data2
+	 * @return inteiro retornado no metodo sobrecarregado compareTo
+	 */
 	public static int compareTo(String _data1, String _data2) {
-			int firstindex1 = _data1.indexOf("/");
-			int secindex1 = _data1.indexOf("/", firstindex1 + 1);
-			int firstindex2 = _data2.indexOf("/");
-			int secindex2 = _data2.indexOf("/", firstindex2 + 1);
-			return Data.compareTo(Integer.parseInt(_data1.substring(0, firstindex1)),
+		int firstindex1 = _data1.indexOf("/");
+		int secindex1 = _data1.indexOf("/", firstindex1 + 1);
+		int firstindex2 = _data2.indexOf("/");
+		int secindex2 = _data2.indexOf("/", firstindex2 + 1);
+		return Data.compareTo(Integer.parseInt(_data1.substring(0, firstindex1)),
 				Integer.parseInt(_data1.substring((firstindex1 + 1), secindex1)),
-				Integer.parseInt(_data1.substring((secindex1 + 1), (secindex1 + 5))),Integer.parseInt(_data2.substring(0, firstindex2)),
+				Integer.parseInt(_data1.substring((secindex1 + 1), (secindex1 + 5))),
+				Integer.parseInt(_data2.substring(0, firstindex2)),
 				Integer.parseInt(_data2.substring((firstindex2 + 1), secindex2)),
 				Integer.parseInt(_data2.substring((secindex2 + 1), (secindex2 + 5))));
 	}
+	
+		
+	public static int[] getData(String _data) {
+		int firstindex = _data.indexOf("/");
+		int secindex = _data.indexOf("/", firstindex + 1);
+		int[] data= new int[3];
+		data[0] = Integer.parseInt(_data.substring(0, firstindex));
+		data[1] = Integer.parseInt(_data.substring((firstindex + 1), secindex));
+		data[2] = Integer.parseInt(_data.substring((secindex + 1), (secindex + 5)));
+		return data;
+		
+	}
 
 	/**
-	 * Método sobrecarregado que fornece um algoritmo para comparar elementos na busca.
+	 * Método sobrecarregado que fornece um algoritmo para comparar elementos na
+	 * busca.
 	 * 
 	 * @return inteiro, 1 se maior, -1 se menor ou 0 se igual
 	 */
+	
+//	datainicio databanco ok != 1
+//	datafim databanco falsp != -1
 	public static int compareTo(int _dia1, int _mes1, int _ano1, int _dia2, int _mes2, int _ano2) {
-		if (_ano1 > _ano2) 
-		{
+		if (_ano1 > _ano2) {
 			return -1;
-		} 
-		else if (_ano1 < _ano2) 
-		{
+		} else if (_ano1 < _ano2) {
 			return 1;
-		} 
-		else 
-		{
-			if (_mes1 > _mes2) 
-			{
+		} else {
+			if (_mes1 > _mes2) {
 				return -1;
-			} 
-			else if (_mes1 < _mes2) 
-			{
+			} else if (_mes1 < _mes2) {
 				return 1;
-			} 
-			else 
-			{
-				if (_dia1 > _dia2) 
-				{
+			} else {
+				if (_dia1 > _dia2) {
 					return -1;
-				} 
-				else if (_dia1 < _dia2) 
-				{
+				} else if (_dia1 < _dia2) {
 					return 1;
-				} 
-				else {
+				} else {
 					return 0;
 				}
 			}

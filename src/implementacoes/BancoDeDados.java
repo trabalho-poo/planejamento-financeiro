@@ -181,6 +181,22 @@ public class BancoDeDados {
 		return 0;
 	}
 
+	public String getStringData(int _idData) throws SQLException {
+		StringBuilder data = new StringBuilder();
+		String query = "SELECT * from planejamento.Data WHERE idData=" + _idData + ";";
+		this.resultSet = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		while (this.resultSet.next()) {
+			data.append(Integer.parseInt(this.resultSet.getString("dia")));
+			data.append("/");
+			data.append(Integer.parseInt(this.resultSet.getString("mes")));
+			data.append("/");
+			data.append(Integer.parseInt(this.resultSet.getString("ano")));
+		}
+		return data.toString();
+	}
+
+
 	/**
 	 * Apartir de um email de um Usuário retorna o Id da mesmo
 	 * 
@@ -254,40 +270,13 @@ public class BancoDeDados {
 	}
 
 	/**
-	 * Insere uma movimentação do tipo receita
-	 * 
-	 * @param _movimentacao Uma instancia da classe Receita
-	 * @para _idUsuario O id do usuário que fez a movimentação
-	 */
-//	public String listarMovimentacoes(int _idUsuario) {
-//		try {
-//			String query = "SELECT * FROM planejamento.Movimentacao ORDER BY data WHERE Usuario_idUsuario="+_idUsuario+";";
-//			this.resultSet = this.statement.executeQuery(query);
-//			this.statement = this.connection.createStatement();
-//			StringBuilder resultset = new StringBuilder();
-//			while (this.resultSet.next()) {
-//
-//				resultset.append("\nID: ");
-//				resultset.append(this.resultSet.getString("id"));
-//				resultset.append(" - Data: ");
-//				resultset.append(this.resultSet.getString("data"));
-//
-//			}
-//			return resultset.toString();
-//		} catch (Exception e) {
-//			System.out.println("Erro: " + e.getMessage());
-//			return null;
-//		}
-//	}
-
-	/**
 	 * Calcula o porcentagem das despesas
 	 * 
 	 * @return a pordecetagem das depesas
 	 */
 	public double getPorcentagemDespesa(int _idUsuario) {
 		try {
-			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUsuario="+_idUsuario+";";
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUsuario=" + _idUsuario + ";";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			double porcentagem = 0.0;
@@ -319,7 +308,7 @@ public class BancoDeDados {
 	 */
 	public double getPorcentagemReceita(int _idUsuario) {
 		try {
-			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUsuario="+_idUsuario+";";
+			String query = "SELECT * FROM planejamento.Movimentacao WHERE Usuario_idUsuario=" + _idUsuario + ";";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			double porcentagem = 0.0;
@@ -351,7 +340,7 @@ public class BancoDeDados {
 	 */
 	public double getPorcentagemTipo(String _tipoGeral, String _tipoEspecifico, int _idUsuario) {
 		try {
-			String query = "SELECT * FROM planejamento.Movimentacao  WHERE Usuario_idUsuario="+_idUsuario+";";
+			String query = "SELECT * FROM planejamento.Movimentacao  WHERE Usuario_idUsuario=" + _idUsuario + ";";
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
 			double porcentagem = 0.0;
@@ -508,16 +497,16 @@ public class BancoDeDados {
 							+ " AND tipo='" + _tipoMovimentacao + "');";
 				else
 					query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = " + _idUsuario
-					+ " AND tipo='" + _tipoMovimentacao + "' AND tipoReceita='" + _tipoEspecifico.toUpperCase()
-					+ "');";
+							+ " AND tipo='" + _tipoMovimentacao + "' AND tipoReceita='" + _tipoEspecifico.toUpperCase()
+							+ "');";
 			} else {
 				if (_tipoEspecifico.equalsIgnoreCase("todos"))
 					query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = " + _idUsuario
 							+ " AND tipo='" + _tipoMovimentacao + "');";
 				else
 					query = "SELECT * FROM planejamento.Movimentacao WHERE (Usuario_idUSuario = " + _idUsuario
-					+ " AND tipo='" + _tipoMovimentacao + "' AND tipoDespesa='" + _tipoEspecifico.toUpperCase()
-					+ "');";
+							+ " AND tipo='" + _tipoMovimentacao + "' AND tipoDespesa='" + _tipoEspecifico.toUpperCase()
+							+ "');";
 			}
 			this.resultSet = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
@@ -546,6 +535,82 @@ public class BancoDeDados {
 			return null;
 		}
 	}
+
+
+	public Object[][] getRelatorioIntervalo(TipoMovimentacao _tipoMovimentacao, String _tipoEspecifico, int _idUsuario,
+			int[] dataInicio, int[] dataFim, BancoDeDados bd) {
+		int i = 0, j = 0;
+		String query;
+		int[][] dataBanco;
+		try {
+			if (_tipoMovimentacao == TipoMovimentacao.TODOS) {
+				query = "SELECT movimentacao.*, data.* FROM planejamento.Movimentacao AS movimentacao INNER JOIN planejamento.Data as data ON (movimentacao.Data_idData=data.idData) WHERE Usuario_idUSuario = "
+						+ _idUsuario + ";";
+			} else if (_tipoMovimentacao == TipoMovimentacao.RECEITA) {
+				if (_tipoEspecifico.equalsIgnoreCase("todos"))
+					query = "SELECT movimentacao.*, data.* FROM planejamento.Movimentacao AS movimentacao INNER JOIN planejamento.Data as data ON (movimentacao.Data_idData=data.idData) WHERE (Usuario_idUSuario = "
+							+ _idUsuario + " AND tipo='" + _tipoMovimentacao + "');";
+				else
+					query = "SELECT movimentacao.*, data.* FROM planejamento.Movimentacao AS movimentacao INNER JOIN planejamento.Data as data ON (movimentacao.Data_idData=data.idData) WHERE (Usuario_idUSuario = "
+							+ _idUsuario + " AND tipo='" + _tipoMovimentacao + "' AND tipoReceita='"
+							+ _tipoEspecifico.toUpperCase() + "');";
+			} else {
+				if (_tipoEspecifico.equalsIgnoreCase("todos"))
+					query = "SELECT movimentacao.*, data.* FROM planejamento.Movimentacao AS movimentacao INNER JOIN planejamento.Data as data ON (movimentacao.Data_idData=data.idData) WHERE (Usuario_idUSuario = "
+							+ _idUsuario + " AND tipo='" + _tipoMovimentacao + "');";
+				else
+					query = "SELECT movimentacao.*, data.* FROM planejamento.Movimentacao AS movimentacao INNER JOIN planejamento.Data as data ON (movimentacao.Data_idData=data.idData) WHERE (Usuario_idUSuario = "
+							+ _idUsuario + " AND tipo='" + _tipoMovimentacao + "' AND tipoDespesa='"
+							+ _tipoEspecifico.toUpperCase() + "');";
+			}
+			// Pegar a quantidade de elementos
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			while (this.resultSet.next()) {
+				if (Data.compareTo(Integer.parseInt(this.resultSet.getString("dia")),
+						Integer.parseInt(this.resultSet.getString("mes")),
+						Integer.parseInt(this.resultSet.getString("ano")), dataInicio[0], dataInicio[1],
+						dataInicio[2]) != 1
+						&& Data.compareTo(Integer.parseInt(this.resultSet.getString("dia")),
+								Integer.parseInt(this.resultSet.getString("mes")),
+								Integer.parseInt(this.resultSet.getString("ano")), dataFim[0], dataFim[1],
+								dataFim[2]) != -1) {
+					i++;
+				}
+			}
+			Object[][] dados = new Object[i][4];
+			i = 0;
+			this.resultSet = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+			while (this.resultSet.next()) {
+				if (Data.compareTo(Integer.parseInt(this.resultSet.getString("dia")),
+						Integer.parseInt(this.resultSet.getString("mes")),
+						Integer.parseInt(this.resultSet.getString("ano")), dataInicio[0], dataInicio[1],
+						dataInicio[2]) != 1
+						&& Data.compareTo(Integer.parseInt(this.resultSet.getString("dia")),
+								Integer.parseInt(this.resultSet.getString("mes")),
+								Integer.parseInt(this.resultSet.getString("ano")), dataFim[0], dataFim[1],
+								dataFim[2]) != -1) {
+					dados[i][0] = this.resultSet.getString("descricao");
+					dados[i][1] = this.resultSet.getString("tipo");
+					// Avaliando o tipo passado como parâmetro para pegar o valor do tipo específico
+					if (this.resultSet.getString("tipo").equalsIgnoreCase("Receita")) {
+						dados[i][2] = this.resultSet.getString("tipoReceita");
+					} else {
+						dados[i][2] = this.resultSet.getString("tipoDespesa");
+					}
+					dados[i][3] = this.resultSet.getString("valor");
+					i++;
+				}
+			}
+			return dados;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+			return null;
+		}
+	}
+
+
 
 	// Codigo banco de dados:
 //	-- -----------------------------------------------------
