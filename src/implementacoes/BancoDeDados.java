@@ -295,7 +295,8 @@ public class BancoDeDados {
 			}
 			return porcentagem;
 		} catch (Exception e) {
-			System.out.println("Erro: " + e.getMessage());
+			
+			System.out.println("Erro1: " + e.getMessage());
 			return 0.0;
 		}
 

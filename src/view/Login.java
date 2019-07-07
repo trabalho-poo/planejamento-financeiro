@@ -64,6 +64,7 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLACK);
 		panel.setBounds(0, 0, 350, 553);
@@ -71,28 +72,6 @@ public class Login extends JFrame {
 		panel.setLayout(null);
 
 		JLabel label = new JLabel("");
-
-		/*
-		 * 	label.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				  xx = e.getX();
-			      xy = e.getY();
-
-			}
-
-
-		});
-		label.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent arg0) {
-				int x = arg0.getXOnScreen();
-		        int y = arg0.getYOnScreen();
-		        Login.this.setLocation(x - xx, y - xy); 
-			}
-		});
-		 */
 		label.setIcon(new ImageIcon(Login.class.getResource("/img/essa - Copia.jpg")));
 		label.setBounds(0, 0, 350, 555);
 		panel.add(label);

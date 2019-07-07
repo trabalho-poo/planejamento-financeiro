@@ -319,10 +319,11 @@ public class Relatorio extends JFrame {
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa(_idUsuario)));
 		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita(_idUsuario)));
-		JFreeChart chart = ChartFactory.createPieChart("Tipo de movimentação", pieDataset, true, true, true);
+//		pieDataset.clear();
+		JFreeChart chart = ChartFactory.createPieChart("", pieDataset, true, true, true);
 
 		ChartPanel grafico = new ChartPanel(chart);
-		grafico.setVisible(false);
+		grafico.setVisible(true);
 		grafico.setBackground(Color.WHITE);
 		grafico.setBounds(580, 216, 240, 235);
 		contentPane.add(grafico);
