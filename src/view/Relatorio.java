@@ -48,6 +48,7 @@ public class Relatorio extends JFrame {
 	private JTable getMatrizDadosGeral;
 	private JTable getMatrizDadosIntervalo;
 	JScrollPane paneMatrizDadosGeral;
+	JScrollPane paneMatrizDadosIntervalo;
 	Object[][] dados;
 	JCheckBox chckbxEspecificarIntervaloDe;
 
@@ -161,13 +162,17 @@ public class Relatorio extends JFrame {
 					}else {
 						//FAZER METODO PARA DATAS
 						if (!TipoMovimentacao.TODOS.equals(tipoMovimentacao.getSelectedItem())) {
-							dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
-									tipoEspecifico.getSelectedItem().toString(), _idUsuario);
+							dados = bd.getRelatorioIntervalo((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
+									tipoEspecifico.getSelectedItem().toString(), _idUsuario, Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()),bd);
 						} else {
-							dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(), "todos",
-									_idUsuario);
+							dados = bd.getRelatorioIntervalo((TipoMovimentacao) tipoMovimentacao.getSelectedItem(), "todos",_idUsuario, Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()),bd);
 						}
+						//getRelatorioIntervalo(TipoMovimentacao _tipoMovimentacao, String _tipoEspecifico, int _idUsuario,int[] dataInicio, int[] dataFim, BancoDeDados bd)
 					}
+					paneMatrizDadosGeral.setVisible(false);
+					getMatrizDadosIntervalo = new JTable(dados, colunas);
+					paneMatrizDadosIntervalo.setViewportView(getMatrizDadosIntervalo);
+					paneMatrizDadosIntervalo.setVisible(true);
 				} else {
 					if (!TipoMovimentacao.TODOS.equals(tipoMovimentacao.getSelectedItem())) {
 						dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
@@ -176,10 +181,11 @@ public class Relatorio extends JFrame {
 						dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(), "todos",
 								_idUsuario);
 					}
+					paneMatrizDadosIntervalo.setVisible(false);
+					getMatrizDadosGeral = new JTable(dados, colunas);
+					paneMatrizDadosGeral.setViewportView(getMatrizDadosGeral);
+					paneMatrizDadosGeral.setVisible(true);
 				}
-				getMatrizDadosGeral = new JTable(dados, colunas);
-				paneMatrizDadosGeral.setViewportView(getMatrizDadosGeral);
-				paneMatrizDadosGeral.setVisible(true);
 			}
 		});
 		btnRelatorio.setBounds(390, 100, 134, 30);
@@ -300,19 +306,24 @@ public class Relatorio extends JFrame {
 //		paneMatrizDadosGeral.setViewportView(getMatrizDadosGeral);
 //		getMatrizDadosGeral.setBounds(200, 169, 378, 360);
 //		contentPane.add(getMatrizDadosGeral);
-
-		getMatrizDadosIntervalo = new JTable();
-		getMatrizDadosIntervalo.setVisible(false);
-		getMatrizDadosIntervalo.setBounds(200, 169, 378, 360);
-		contentPane.add(getMatrizDadosIntervalo);
+		
+		paneMatrizDadosIntervalo = new JScrollPane();
+		paneMatrizDadosIntervalo.setVisible(false);
+		paneMatrizDadosIntervalo.setBounds(200, 169, 378, 360);
+		contentPane.add(paneMatrizDadosIntervalo);
+//		getMatrizDadosIntervalo = new JTable();
+//		getMatrizDadosIntervalo.setVisible(false);
+//		getMatrizDadosIntervalo.setBounds(200, 169, 378, 360);
+//		contentPane.add(getMatrizDadosIntervalo);
 
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa(_idUsuario)));
 		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita(_idUsuario)));
-		JFreeChart chart = ChartFactory.createPieChart("Tipo de movimentação", pieDataset, true, true, true);
+//		pieDataset.clear();
+		JFreeChart chart = ChartFactory.createPieChart("", pieDataset, true, true, true);
 
 		ChartPanel grafico = new ChartPanel(chart);
-		grafico.setVisible(false);
+		grafico.setVisible(true);
 		grafico.setBackground(Color.WHITE);
 		grafico.setBounds(580, 216, 240, 235);
 		contentPane.add(grafico);
