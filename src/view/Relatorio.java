@@ -51,6 +51,8 @@ public class Relatorio extends JFrame {
 	JScrollPane paneMatrizDadosIntervalo;
 	Object[][] dados;
 	JCheckBox chckbxEspecificarIntervaloDe;
+	ChartPanel grafico;
+	DefaultPieDataset pieDataset;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -78,7 +80,7 @@ public class Relatorio extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		String[] colunas = { "Descricao", "Tipo", "Classificacao", "Valor" };
+		String[] colunas = { "Descricao", "Data", "Tipo", "Classificacao", "Valor" };
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -146,6 +148,7 @@ public class Relatorio extends JFrame {
 		JButton btnRelatorio = new JButton("Filtrar");
 		btnRelatorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				grafico.setVisible(true);
 				if (chckbxEspecificarIntervaloDe.isSelected()) {
 					if (dataInicio.getText().equals("") || dataFim.getText().equals("")) {
 						JOptionPane.showMessageDialog(contentPane,
@@ -161,10 +164,16 @@ public class Relatorio extends JFrame {
 								"Erro ao gerar relatório", JOptionPane.ERROR_MESSAGE);
 					}else {
 						//FAZER METODO PARA DATAS
+						pieDataset.clear();
+						System.out.println("\n\n\n\n\n getPorcentagemReceitaIntervalo = " + bd.getPorcentagemReceitaIntervalo(_idUsuario,Data.getData(dataInicio.getText()),Data.getData(dataFim.getText())));
+						System.out.println("getPorcentagemDespesaIntervalo = " + bd.getPorcentagemDespesaIntervalo(_idUsuario,Data.getData(dataInicio.getText()),Data.getData(dataFim.getText())));
+						pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesaIntervalo(_idUsuario,Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()))));
+						pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceitaIntervalo(_idUsuario,Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()))));
 						if (!TipoMovimentacao.TODOS.equals(tipoMovimentacao.getSelectedItem())) {
 							dados = bd.getRelatorioIntervalo((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
 									tipoEspecifico.getSelectedItem().toString(), _idUsuario, Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()),bd);
 						} else {
+							
 							dados = bd.getRelatorioIntervalo((TipoMovimentacao) tipoMovimentacao.getSelectedItem(), "todos",_idUsuario, Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()),bd);
 						}
 						//getRelatorioIntervalo(TipoMovimentacao _tipoMovimentacao, String _tipoEspecifico, int _idUsuario,int[] dataInicio, int[] dataFim, BancoDeDados bd)
@@ -174,10 +183,14 @@ public class Relatorio extends JFrame {
 					paneMatrizDadosIntervalo.setViewportView(getMatrizDadosIntervalo);
 					paneMatrizDadosIntervalo.setVisible(true);
 				} else {
+					pieDataset.clear();
+					pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa(_idUsuario)));
+					pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita(_idUsuario)));
 					if (!TipoMovimentacao.TODOS.equals(tipoMovimentacao.getSelectedItem())) {
 						dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
 								tipoEspecifico.getSelectedItem().toString(), _idUsuario);
 					} else {
+						
 						dados = bd.getRelatorio((TipoMovimentacao) tipoMovimentacao.getSelectedItem(), "todos",
 								_idUsuario);
 					}
@@ -316,14 +329,14 @@ public class Relatorio extends JFrame {
 //		getMatrizDadosIntervalo.setBounds(200, 169, 378, 360);
 //		contentPane.add(getMatrizDadosIntervalo);
 
-		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa(_idUsuario)));
-		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita(_idUsuario)));
+		pieDataset = new DefaultPieDataset();
 //		pieDataset.clear();
+//		pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesa(_idUsuario)));
+//		pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceita(_idUsuario)));
 		JFreeChart chart = ChartFactory.createPieChart("", pieDataset, true, true, true);
 
-		ChartPanel grafico = new ChartPanel(chart);
-		grafico.setVisible(true);
+		grafico = new ChartPanel(chart);
+		grafico.setVisible(false);
 		grafico.setBackground(Color.WHITE);
 		grafico.setBounds(580, 216, 240, 235);
 		contentPane.add(grafico);
