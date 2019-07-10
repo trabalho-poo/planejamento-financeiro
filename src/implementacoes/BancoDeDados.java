@@ -41,6 +41,7 @@ public class BancoDeDados {
 
 	/**
 	 * Faz conexão com o banco de dados
+	 * @throws Exception Erro
 	 */
 	public void conectar() throws Exception {
 
@@ -62,6 +63,7 @@ public class BancoDeDados {
 	 * @return true para conexão realizada com sucesso
 	 *         <p>
 	 *         false banco de dados não conectado
+	 * @throws Exception Erro
 	 */
 	public boolean isConectado() throws Exception {
 		if (this.connection != null)
@@ -113,6 +115,7 @@ public class BancoDeDados {
 	 *         <p>
 	 *         false para usuário não cadastrado ou alguma informação esteja
 	 *         incorreta
+	 * @throws SQLException Erro
 	 */
 	public boolean acesso(String _email, String _senha) throws SQLException {
 		String query = "SELECT senha FROM planejamento.Usuario WHERE email='" + _email + "';";
@@ -130,6 +133,7 @@ public class BancoDeDados {
 	 * 
 	 * @param _email E-mail do usuário
 	 * @return int o id do usuário
+	 * @throws SQLException Erro
 	 */
 	public int idUsuario(String _email) throws SQLException {
 		String query = "SELECT (idUsuario) from planejamento.Usuario WHERE email='" + _email + "';";
@@ -149,6 +153,7 @@ public class BancoDeDados {
 	 * Insere uma data no banco de dados
 	 * 
 	 * @param _data Uma instancia da classe Data
+	 * @throws SQLException Erro
 	 */
 	public void inserirData(Data _data) throws SQLException {
 		StringBuilder query = new StringBuilder();
@@ -169,6 +174,7 @@ public class BancoDeDados {
 	 * 
 	 * @param _data Uma instancia da classe Data
 	 * @return o id da data
+	 * @throws SQLException Erro
 	 */
 	public int idData(Data _data) throws SQLException {
 		this.inserirData(_data);
@@ -189,7 +195,7 @@ public class BancoDeDados {
 	 * 
 	 * @param _idData id da data do banco de dados
 	 * @return String da data formatada no modelo D/M/Y
-	 * @throws SQLException
+	 * @throws SQLException Erro
 	 */
 	public String getStringData(int _idData) throws SQLException {
 		StringBuilder data = new StringBuilder();
@@ -212,7 +218,8 @@ public class BancoDeDados {
 	 * Insere uma movimentação do tipo Receita
 	 * 
 	 * @param _movimentacao Uma instancia da classe Receita
-	 * @para _idUsuario O id do usuário que fez a movimentação
+	 * @param _idUsuario O id do usuário que fez a movimentação
+	 * @throws SQLException Erro
 	 */
 	public void inserirMovimentacaoReceita(Receita _movimentacao, int _idUsuario) throws SQLException {
 		StringBuilder query = new StringBuilder();
@@ -239,7 +246,8 @@ public class BancoDeDados {
 	 * Insere uma movimentação do tipo Despesa
 	 * 
 	 * @param _movimentacao Uma instancia da classe Receita
-	 * @para _idUsuario O id do usuário que fez a movimentação
+	 * @param _idUsuario O id do usuário que fez a movimentação
+	 * @throws SQLException Erro
 	 */
 	public void inserirMovimentacaoDespesa(Despesa _movimentacao, int _idUsuario) throws SQLException {
 		StringBuilder query = new StringBuilder();
@@ -267,7 +275,7 @@ public class BancoDeDados {
 	 * passado como parametro.
 	 * 
 	 * @param _idMovimentacao id da movimentacao
-	 * @throws SQLException
+	 * @throws SQLException Erro
 	 */
 	public void deleteMovimentacao(int _idMovimentacao) throws SQLException {
 		String query = "DELETE FROM `planejamento`.`movimentacao` WHERE (`idMovimentacao` = '" + _idMovimentacao + "')";
@@ -281,7 +289,7 @@ public class BancoDeDados {
 	 * @param _valor     valor da movimentacao
 	 * @param _descricao descricao da movimentacao
 	 * @param _idUsuario id do usuario
-	 * @throws SQLException
+	 * @throws SQLException Erro 
 	 */
 	public void deleteMovimentacao(double _valor, String _descricao, int _idUsuario) throws SQLException {
 		String query = "DELETE FROM `planejamento`.`movimentacao` WHERE (`valor` = '" + _valor + "' AND `descricao` = '"
@@ -293,6 +301,7 @@ public class BancoDeDados {
 	/**
 	 * Calcula o porcentagem das despesas
 	 * 
+	 * @param _idUsuario id do usuario
 	 * @return a pordecetagem das depesas
 	 */
 	public double getPorcentagemDespesa(int _idUsuario) {
@@ -326,6 +335,7 @@ public class BancoDeDados {
 	/**
 	 * Calcula o porcentagem das receita
 	 * 
+	 * @param _idUsuario id do usuario
 	 * @return a pordecetagem das receita
 	 */
 	public double getPorcentagemReceita(int _idUsuario) {
@@ -358,7 +368,10 @@ public class BancoDeDados {
 	/**
 	 * Calcula o porcentagem do tipo
 	 * 
-	 * @return a pordecetagem do tipo
+	 * @param _tipoGeral tipo Geral da movimentacao
+	 * @param _tipoEspecifico tipo especifico da movimentacao
+	 * @param _idUsuario id do usuario
+	 * @return a porcentagem do tipo
 	 */
 	public double getPorcentagemTipo(String _tipoGeral, String _tipoEspecifico, int _idUsuario) {
 		try {
@@ -408,6 +421,8 @@ public class BancoDeDados {
 	/**
 	 * Geara uma matriz com as receitas e despesas
 	 * 
+	 * @param _idUsuario id do usuario
+	 * @param _tipo tipo
 	 * @return uma matriz com as receitas e despesas
 	 */
 	public Object[][] getMatrizDados(String _tipo, int _idUsuario) {
@@ -444,6 +459,8 @@ public class BancoDeDados {
 	/**
 	 * Calcula o valor das receitas
 	 * 
+	 * @param _idUsuario id do usuario
+	 * 
 	 * @return O valor das receitas
 	 */
 	public double getValorTotal(int _idUsuario) {
@@ -470,6 +487,8 @@ public class BancoDeDados {
 	 * Geara uma matriz com as receitas e despesas
 	 * <p>
 	 * com Descrição, tipo, valor, editar, excluir
+	 * 
+	 * @param _idUsuario id do usuario
 	 * 
 	 * @return uma matriz com as receitas e despesas
 	 */
@@ -733,6 +752,9 @@ public class BancoDeDados {
 	/**
 	 * Calcula o porcentagem das receita
 	 * 
+	 * @param _idUsuario id do usuario
+	 * @param dataInicio Data inicio do intervalo
+	 * @param dataFim Data fim do intervalo
 	 * @return a pordecetagem das receita
 	 */
 	public double getPorcentagemReceitaIntervalo(int _idUsuario, int[] dataInicio, int[] dataFim) {

@@ -37,13 +37,13 @@ public class Usuario {
 	/**
 	 * Construtor Completo de Usuario
 	 * 
-	 * @param _nome
-	 * @param _sexo
-	 * @param _dataNascimento
-	 * @param _rg
-	 * @param _cpf
-	 * @param _email
-	 * @param _senha
+	 * @param _nome O nome do usuario
+	 * @param _sexo Tipo sexo do usuario
+	 * @param _dataNascimento Data de nascimento do usuario
+	 * @param _rg RG do usuario
+	 * @param _cpf CPF do usuario
+	 * @param _email Email do usuario
+	 * @param _senha Senha do usuario
 	 */
 	public Usuario(String _nome, Sexo _sexo, Data _dataNascimento, String _rg, String _cpf, String _email,
 			String _senha) {
@@ -113,7 +113,7 @@ public class Usuario {
 
 	/**
 	 * Setar a data de Nascimento do Usuario
-	 * @param _dataNascimento
+	 * @param _dataNascimento Data para comparacao
 	 */
 	public void setDataNascimento(Data _dataNascimento) {
 		this.dataNascimento = _dataNascimento;
@@ -170,6 +170,7 @@ public class Usuario {
 	/**
 	 * Compara os usuarios por nome em ordem alfabetica.
 	 * 
+	 * @param _usuario Objeto usuario para comparacao
 	 * @return retorna 1 caso o Nome do objeto for maior que o do parametro,
 	 * retorna -1 caso seja menor, 0 caso sejam iguais.
 	 */
@@ -180,6 +181,7 @@ public class Usuario {
 	/**
 	 * Compara os usuarios por Data de Nascimento em ordem alfabetica.
 	 * 
+	 * @param _usuario Objeto usuario para comparacao
 	 * @return retorna 1 caso o Data do objeto for maior que a do parametro,
 	 * retorna -1 caso seja menor, 0 caso sejam iguais.
 	 */

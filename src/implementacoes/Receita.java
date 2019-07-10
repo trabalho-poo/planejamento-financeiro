@@ -14,10 +14,10 @@ public class Receita extends Movimentacao {
 	/**
 	 * Construtor completo para criacao de Receita.
 	 * 
-	 * @param _data
-	 * @param _descricao
-	 * @param _valor
-	 * @param _tipo
+	 * @param _data Data da receita
+	 * @param _descricao Descricao da Receita
+	 * @param _valor Valor da Receita
+	 * @param _tipo Tipo de movimentacao
 	 */
 	public Receita(Data _data, String _descricao, Double _valor, TipoReceita _tipo) {
 		super(_data, _descricao, _valor);

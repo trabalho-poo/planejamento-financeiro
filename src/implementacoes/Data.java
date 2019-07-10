@@ -266,7 +266,7 @@ public class Data {
 	 * /** Metodo para verificar se o data passada como parametro esta em um
 	 * intervalo valido.
 	 * 
-	 * @param _data
+	 * @param _data Objeto para comparacao e validacao
 	 * @return true se a Data foi valida, caso contrario, false.
 	 */
 	public static boolean isDataValida(String _data) {
@@ -366,8 +366,8 @@ public class Data {
 	 * * Método que recebe duas datas no formato string e chama o algoritimo de
 	 * comparacao de Data que recebe a data em inteiros.
 	 * 
-	 * @param _data1
-	 * @param _data2
+	 * @param _data1 Objeto 2 para comparacao
+	 * @param _data2 Objeto 2 para comparacao
 	 * @return inteiro retornado no metodo sobrecarregado compareTo
 	 */
 	public static int compareTo(String _data1, String _data2) {

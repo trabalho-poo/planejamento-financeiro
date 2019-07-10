@@ -13,10 +13,10 @@ public class Despesa extends Movimentacao {
 	
 	/**
 	 * Construtor completo para criacao de Despesa
-	 * @param _data
-	 * @param _descricao
-	 * @param _valor
-	 * @param _tipo
+	 * @param _data Data da Despesa
+	 * @param _descricao Descricao da despesa
+	 * @param _valor Valor da despesa
+	 * @param _tipo Tipo de movimentacao
 	 */
 	public Despesa(Data _data, String _descricao, Double _valor, TipoDespesa _tipo) {
 		super(_data, _descricao, _valor);
