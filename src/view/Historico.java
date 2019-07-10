@@ -99,6 +99,8 @@ public class Historico extends JFrame {
 
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new Relatorio(_idUsuario, bd).setVisible(true);
 			}
 		});
 
@@ -125,7 +127,7 @@ public class Historico extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(188, 33, 644, 482);
 		contentPane.add(scrollPane);
-		String[] colunas = { "Descricao", "Tipo", "Classificacao", "Valor", "Editar", "Excluir" };
+		String[] colunas = { "Descrição", "Data", "Tipo", "Classificacao", "Valor", "Excluir" };
 
 		Object[][] dados = bd.getHistorico(_idUsuario);
 

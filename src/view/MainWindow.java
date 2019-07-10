@@ -20,6 +20,7 @@ import implementacoes.Despesa;
 import implementacoes.Receita;
 import implementacoes.Sexo;
 import implementacoes.TipoDespesa;
+import implementacoes.TipoMovimentacao;
 import implementacoes.TipoReceita;
 import implementacoes.Usuario;
 import java.awt.Font;
@@ -33,6 +34,7 @@ import java.awt.Component;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
@@ -311,20 +313,20 @@ public class MainWindow extends JFrame {
 		home.setBounds(0, 0, 1590, 590);
 		layeredPane_1.add(home);
 		home.setLayout(null);
-		
-				painelVoltarBtn = new JButton("Voltar");
-				painelVoltarBtn.setBounds(1336, 13, 97, 25);
-				home.add(painelVoltarBtn);
-				painelVoltarBtn.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						homeLogado.setVisible(true);
-						home.setVisible(true);
-						painelVoltarBtn.setVisible(false);
-						homeNovaMovimentacao.setVisible(false);
-						homeInicio.setVisible(true);
-					}
-				});
-				painelVoltarBtn.setFont(new Font("Tahoma", Font.PLAIN, 17));
+
+		painelVoltarBtn = new JButton("Voltar");
+		painelVoltarBtn.setBounds(1369, 13, 97, 25);
+		home.add(painelVoltarBtn);
+		painelVoltarBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				homeLogado.setVisible(true);
+				home.setVisible(true);
+				painelVoltarBtn.setVisible(false);
+				homeNovaMovimentacao.setVisible(false);
+				homeInicio.setVisible(true);
+			}
+		});
+		painelVoltarBtn.setFont(new Font("Tahoma", Font.PLAIN, 17));
 
 		homeNovaMovimentacao = new JPanel();
 		homeNovaMovimentacao.setBackground(Color.WHITE);
@@ -332,11 +334,11 @@ public class MainWindow extends JFrame {
 		home.add(homeNovaMovimentacao);
 		homeNovaMovimentacao.setLayout(null);
 
-		JLabel novaMovimentacaoCadastrarMovimentacaoLabel = new JLabel("Cadastrar Movimenta\u00E7\u00E3o");
+		JLabel novaMovimentacaoCadastrarMovimentacaoLabel = new JLabel("CADASTRAR MOVIMENTA\u00C7\u00C3O");
 		novaMovimentacaoCadastrarMovimentacaoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		novaMovimentacaoCadastrarMovimentacaoLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		novaMovimentacaoCadastrarMovimentacaoLabel.setEnabled(false);
-		novaMovimentacaoCadastrarMovimentacaoLabel.setBounds(449, 43, 280, 75);
+		novaMovimentacaoCadastrarMovimentacaoLabel.setBounds(353, 43, 538, 75);
 		homeNovaMovimentacao.add(novaMovimentacaoCadastrarMovimentacaoLabel);
 
 		JLabel novaMovimentacaoDescricaoLabel = new JLabel("Descri\u00E7\u00E3o:");
@@ -384,7 +386,7 @@ public class MainWindow extends JFrame {
 		novaMovimentacaoTipoComboBox.setSelectedIndex(0);
 		novaMovimentacaoTipoComboBox.setBounds(728, 320, 163, 30);
 		homeNovaMovimentacao.add(novaMovimentacaoTipoComboBox);
-		
+
 		JRadioButton novaMovimentacaoReceitaRadio = new JRadioButton("Receita");
 		novaMovimentacaoReceitaRadio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -420,86 +422,25 @@ public class MainWindow extends JFrame {
 				try {
 					if (bd.isConectado()) {
 						if (novaMovimentacaoReceitaRadio.isSelected()) {
-							// ACADEMIA", "AGUA", "ALUGUEL", "CLUBE
-							switch (((String) novaMovimentacaoTipoComboBox.getSelectedItem()).toLowerCase()) {
-							case "salario":
-								bd.inserirMovimentacaoReceita(new Receita(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoReceita.SALARIO),
-										_idUsuario);
-								break;
-							case "outros":
-								bd.inserirMovimentacaoReceita(new Receita(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoReceita.OUTROS),
-										_idUsuario);
-								break;
-							}
-
-						} else {
-							switch (((String) novaMovimentacaoTipoComboBox.getSelectedItem()).toLowerCase()) {
-							// ALUGUEL, TELEFONE, INTERNET, ACADEMIA, CLUBE, SUPERMERCADO, LUZ, AGUA
-							case "aluguel":
-								bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoDespesa.ALUGUEL),
-										_idUsuario);
-								break;
-							case "telefone":
-								bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoDespesa.TELEFONE),
-										_idUsuario);
-								break;
-							case "internet":
-								bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoDespesa.INTERNET),
-										_idUsuario);
-								break;
-							case "academia":
-								bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoDespesa.ACADEMIA),
-										_idUsuario);
-								break;
-							case "clube":
-								bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoDespesa.CLUBE),
-										_idUsuario);
-								break;
-							case "supermercado":
-								bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()),
-										TipoDespesa.SUPERMERCADO), _idUsuario);
-								break;
-							case "luz":
-								bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoDespesa.LUZ),
-										_idUsuario);
-								break;
-							case "agua":
-								bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoDespesa.AGUA),
-										_idUsuario);
-								break;
-							case "outros":
-								bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
-										novaMovimentacaoDescricaoText.getText(),
-										Double.parseDouble(novaMovimentacaoValorText.getText()), TipoDespesa.OUTROS),
-										_idUsuario);
-								break;
-							}
+							bd.inserirMovimentacaoReceita(new Receita(new Data(novaMovimentacaoDataText.getText()),
+									novaMovimentacaoDescricaoText.getText(),
+									Double.parseDouble(novaMovimentacaoValorText.getText()), (TipoReceita)novaMovimentacaoTipoComboBox.getSelectedItem()),
+									_idUsuario);
+						}else {
+							bd.inserirMovimentacaoDespesa(new Despesa(new Data(novaMovimentacaoDataText.getText()),
+									novaMovimentacaoDescricaoText.getText(),
+									Double.parseDouble(novaMovimentacaoValorText.getText()), (TipoDespesa)novaMovimentacaoTipoComboBox.getSelectedItem()),
+									_idUsuario);
 						}
 
 						JOptionPane.showMessageDialog(contentPane, "Movimentação cadastrada com sucesso!", "",
 								JOptionPane.INFORMATION_MESSAGE);
-						setVisible(false);
-						new Home(_idUsuario, bd).setVisible(true);
+						login.setVisible(false);
+						homeLogado.setVisible(true);
+						home.setVisible(true);
+						painelVoltarBtn.setVisible(false);
+						homeNovaMovimentacao.setVisible(false);
+						homeInicio.setVisible(true);
 					} else {
 						Component contentPane = null;
 						JOptionPane.showMessageDialog(contentPane, "Não foi possivel conectar ao banco de dados",
@@ -615,7 +556,7 @@ public class MainWindow extends JFrame {
 		painelImagemLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/img/essa - Copia.jpg")));
 		home.add(painelImagemLabel);
 
-		String[] homeInicioColunaTable = { "Tipo", "Valor" };
+		String[] homeInicioColunaTable = { "Descrição","Data", "Tipo", "Categoria", "Valor" };
 
 		JPanel homeHistorico = new JPanel();
 		homeHistorico.setBackground(Color.WHITE);
@@ -679,7 +620,21 @@ public class MainWindow extends JFrame {
 									new Double(bd.getPorcentagemReceita(_idUsuario)));
 
 							// iniciar tabelas
-							JTable homeInicioReceitaMesTable = new JTable(bd.getMatrizDados("RECEITA", _idUsuario),
+							Date date = new Date();
+							int[] homeInicioDataInicioVetor = new int[3];
+							int[] homeInicioDataFimVetor = { date.getDate(), date.getMonth() + 1,
+									date.getYear() + 1900 };
+							homeInicioDataInicioVetor[0] = date.getDate();
+							if (date.getMonth() == 0) {
+								homeInicioDataInicioVetor[1] = 12;
+								homeInicioDataInicioVetor[2] = date.getYear() + 1900 - 1;
+							} else {
+								homeInicioDataInicioVetor[1] = date.getMonth() + 1;
+								homeInicioDataInicioVetor[2] = date.getYear() + 1900;
+							}
+							JTable homeInicioReceitaMesTable = new JTable(
+									bd.getRelatorioIntervalo(TipoMovimentacao.RECEITA, "TODOS", _idUsuario,
+											homeInicioDataInicioVetor, homeInicioDataFimVetor, bd),
 									homeInicioColunaTable);
 							homeInicioReceitaMesTable.setBackground(new Color(255, 255, 255));
 							homeInicioReceitaMesTable.setBounds(216, 282, 266, 258);
@@ -688,7 +643,9 @@ public class MainWindow extends JFrame {
 							homeInicioReceitaMesTablePane.setSize(750, 260);
 							homeInicio.add(homeInicioReceitaMesTablePane);
 
-							JTable homeInicioDespesaMesTable = new JTable(bd.getMatrizDados("DESPESA", _idUsuario),
+							JTable homeInicioDespesaMesTable = new JTable(
+									bd.getRelatorioIntervalo(TipoMovimentacao.DESPESA, "TODOS", _idUsuario,
+											homeInicioDataInicioVetor, homeInicioDataFimVetor, bd),
 									homeInicioColunaTable);
 							homeInicioDespesaMesTable.setBackground(new Color(255, 255, 255));
 							homeInicioDespesaMesTable.setBounds(216, 282, 266, 258);

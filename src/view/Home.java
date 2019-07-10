@@ -18,6 +18,7 @@ import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 
 import implementacoes.BancoDeDados;
+import implementacoes.TipoMovimentacao;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
@@ -29,6 +30,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Button;
 import java.awt.Font;
@@ -170,12 +172,26 @@ public class Home extends JFrame {
 		grafico.setLayout(null);
 
 		saldo = new JTextField();
+		saldo.setEditable(false);
 		saldo.setText("R$ " + bd.getValorTotal(_idUsuario));
 		saldo.setBounds(653, 171, 116, 22);
 		contentPane.add(saldo);
 		saldo.setColumns(10);
+		
+		Date date = new Date();
+		int[] homeInicioDataInicioVetor = new int[3];
+		int[] homeInicioDataFimVetor = { date.getDate(), date.getMonth() + 1,
+				date.getYear() + 1900 };
+		homeInicioDataInicioVetor[0] = date.getDate();
+		if (date.getMonth() == 0) {
+			homeInicioDataInicioVetor[1] = 12;
+			homeInicioDataInicioVetor[2] = date.getYear() + 1900 - 1;
+		} else {
+			homeInicioDataInicioVetor[1] = date.getMonth();
+			homeInicioDataInicioVetor[2] = date.getYear() + 1900;
+		}
 
-		tableReceita = new JTable(bd.getMatrizDados("RECEITA", _idUsuario), colunas);
+		tableReceita = new JTable(bd.getMatrizDadosIntervalo(TipoMovimentacao.RECEITA, "TODOS", _idUsuario, homeInicioDataInicioVetor, homeInicioDataFimVetor, bd), colunas);
 		tableReceita.setBackground(new Color(255, 255, 255));
 		tableReceita.setBounds(216, 282, 266, 258);
 		JScrollPane paneTableReceita = new JScrollPane(tableReceita);
@@ -186,8 +202,8 @@ public class Home extends JFrame {
 		JLabel lblSaldo = new JLabel("Saldo:");
 		lblSaldo.setBounds(691, 120, 56, 38);
 		contentPane.add(lblSaldo);
-
-		tableDespesa = new JTable(bd.getMatrizDados("DESPESA", _idUsuario), colunas);
+		
+		tableDespesa = new JTable(bd.getMatrizDadosIntervalo(TipoMovimentacao.DESPESA, "TODOS", _idUsuario, homeInicioDataInicioVetor, homeInicioDataFimVetor, bd), colunas);
 		tableDespesa.setBackground(Color.WHITE);
 		tableDespesa.setBounds(542, 282, 266, 258);
 		JScrollPane paneTableDespesa = new JScrollPane(tableDespesa);
