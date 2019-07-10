@@ -165,10 +165,10 @@ public class Relatorio extends JFrame {
 					}else {
 						//FAZER METODO PARA DATAS
 						pieDataset.clear();
-						System.out.println("\n\n\n\n\n getPorcentagemReceitaIntervalo = " + bd.getPorcentagemReceitaIntervalo(_idUsuario,Data.getData(dataInicio.getText()),Data.getData(dataFim.getText())));
-						System.out.println("getPorcentagemDespesaIntervalo = " + bd.getPorcentagemDespesaIntervalo(_idUsuario,Data.getData(dataInicio.getText()),Data.getData(dataFim.getText())));
-						pieDataset.setValue("Despesa", new Double(bd.getPorcentagemDespesaIntervalo(_idUsuario,Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()))));
-						pieDataset.setValue("Receita", new Double(bd.getPorcentagemReceitaIntervalo(_idUsuario,Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()))));
+						double porcentagemReceita = bd.getPorcentagemReceitaIntervalo(_idUsuario,Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()));
+						double porcentagemDespesa = (100 - porcentagemReceita);
+						pieDataset.setValue("Despesa", new Double(porcentagemDespesa));
+						pieDataset.setValue("Receita", new Double(porcentagemReceita));
 						if (!TipoMovimentacao.TODOS.equals(tipoMovimentacao.getSelectedItem())) {
 							dados = bd.getRelatorioIntervalo((TipoMovimentacao) tipoMovimentacao.getSelectedItem(),
 									tipoEspecifico.getSelectedItem().toString(), _idUsuario, Data.getData(dataInicio.getText()),Data.getData(dataFim.getText()),bd);
